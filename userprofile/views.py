@@ -14,22 +14,21 @@ def index(request):
 def login_view(request):
     template_file = os.path.join("user", "signin.html")
     if request.method == "POST":
-        form = MyLoginForm(request.POST)
-        
+        form = MyLoginForm(request, data=request.POST)
+        print("************************************")
         if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(request, username=username, password=password)
+            print("````````````````````************************************````````````````````")
+            user = form.get_user()
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('/home')
+            error_message = {"message": "Invalid credential"}
 
-            return render(request, template_file)
+            return render(request, template_file, error_message)
     else:
         form = MyLoginForm()
-        print(form)
-        context = {"form": form}
-        return render(request, template_file, context)
+    context = {"form": form}
+    return render(request, template_file, context)
 
 def signup_view(request):
     template_file = os.path.join("user", "signup.html")
@@ -37,10 +36,13 @@ def signup_view(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data["username"]
-            print("-"*100)
+            
             form.save()
             user_obj = User.objects.get(username=username)
-            profile_obj = Profile.objects.create()
+            print("-"*100, user_obj)
+            new_profile = Profile.objects.create(user=user_obj, id_user=user_obj.id)
+            new_profile.save()
+
             return render(request, template_file)
     else:
         form = SignUpForm()

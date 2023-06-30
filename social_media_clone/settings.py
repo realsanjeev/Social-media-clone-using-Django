@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'userprofile',
+    'posts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -130,6 +131,4 @@ STATICFILES_DIRS = [
 
 # add media dir
 MEDIA_URL = "media/"
-MEDIA_ROOT =[
-    BASE_DIR / "media"
-]
+MEDIA_ROOT = BASE_DIR / "media"

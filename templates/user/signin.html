@@ -12,12 +12,13 @@
                 <p class="text text-normal">New user? <span><a href="/signup" class="text text-links">Create an account</a></span>
                 </p>
             </div>
+            <h6 style="color: red;">{{message}}</h6>
             <form name="signin" class="form" method="post" action="/login">
                 {% csrf_token %}
                 {{form.as_p}}
                 <div class="input-control">
                     <a href="#" class="text text-links">Forgot Password</a>
-                    <input type="submit" name="submit" class="input-submit" value="Sign In" disabled>
+                    <input type="submit" name="submit" class="input-submit" value="Sign In" >
                 </div>
             </form>
             
