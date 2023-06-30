@@ -1,0 +1,28 @@
+{% extends "user/base.html" %}
+{% block title %}
+: Login
+{% endblock title %}
+
+{% block auth_container %}
+<main class="main">
+    <div class="container">
+        <section class="wrapper">
+            <div class="heading">
+                <h1 class="text text-large">Sign In</h1>
+                <p class="text text-normal">New user? <span><a href="/signup" class="text text-links">Create an account</a></span>
+                </p>
+            </div>
+            <form name="signin" class="form" method="post" action="/login">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div class="input-control">
+                    <a href="#" class="text text-links">Forgot Password</a>
+                    <input type="submit" name="submit" class="input-submit" value="Sign In" disabled>
+                </div>
+            </form>
+            
+        </section>
+    </div>
+</main>
+
+{% endblock auth_container %}
