@@ -1,8 +1,14 @@
+import os
 from django.shortcuts import render, HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+login_required(login_url="login")
 def home(request):
-    return HttpResponse("<h1>Home is working..</h1>")
+    template_files = os.path.join("posts", "home.html")
+    return render(request, template_files)
 
+login_required(login_url="login")
 def posts(request):
-    return HttpResponse("<h2>Posts is working..</h2>")
+    template_files = os.path.join("posts", "home.html")
+    return render(request, template_files)

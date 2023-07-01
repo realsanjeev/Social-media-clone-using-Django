@@ -1,0 +1,54 @@
+{% extends 'posts/base.html' %} 
+{% block link %} {% load static %}
+<link rel="stylesheet" href="{% static 'styles/userprofile//settings.css' %}" />
+{% endblock link %} 
+{% block user_container %}
+
+<div class="profile__section">
+  <div class="head">
+    <div class="container">
+      <div class="title">
+        <h1>General Account Setting</h1>
+        <h3>@{{user.username}}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="container">
+      <form method="post" action="/settings" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="first">
+          <label for="first">Profile Picture</label>
+          <div class="clear"></div>
+          <img src="{{user_profile.profile_pics.url}}" />
+          <input type="file"
+           name="profile_pic" 
+           id="first" 
+           accept="image/*"
+            />
+        </div>
+        <div class="pass">
+          <label for="pass">Location</label>
+          <div class="clear"></div>
+          <input
+            type="text"
+            name="location"
+            value={{user_profile.location}}
+            id="pass"
+            placeholder="Your Location"
+          />
+        </div>
+        <div class="cpass">
+          <label for="Cpass">Bio</label>
+          <div class="clear"></div>
+          <textarea name="bio" id="Cpass">{{user_profile.bio}}</textarea>
+        </div>
+        <div class="submit">
+          <input type="submit" value="Save changes" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock user_container %}
