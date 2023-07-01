@@ -8,7 +8,14 @@ def home(request):
     template_files = os.path.join("posts", "home.html")
     return render(request, template_files)
 
-login_required(login_url="login")
+@login_required(login_url="login")
 def posts(request):
     template_files = os.path.join("posts", "home.html")
+    return render(request, template_files)
+
+@login_required(login_url='login')
+def upload_view(request):
+    template_files = os.path.join('posts',  'upload.html')
+    if request.method == 'POST':
+        pass
     return render(request, template_files)

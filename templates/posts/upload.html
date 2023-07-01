@@ -1,0 +1,22 @@
+{% extends "posts/base.html" %}
+
+{% block link %} {% load static %}
+<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
+<link rel="stylesheet" href="{% static 'styles/posts//upload.css' %}" />
+{% endblock link %} 
+
+{% block user_container %}
+
+<form action="" method="post" enctype="multipart/form-data">
+<div id="drop-area">
+    <div class="drop-icon">
+      <i class="fa-light fa-file-upload"></i>
+    </div>
+    <div class="drop-text">Drag and drop Image here</div>
+  </div>
+  <textarea id="dropped-content" maxlength="5000" spellcheck="true" placeholder="caption"></textarea>
+  <div id="chars">0/5000</div>
+  <button type="submit">Upload Post</button>
+</form>
+<script src="{% static 'scripts/upload.js' %}"></script>
+{% endblock user_container %}
