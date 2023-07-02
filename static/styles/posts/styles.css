@@ -50,8 +50,8 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: black;
-    background-image: url(https://assets.codepen.io/7552830/internal/avatars/users/default.png?format=auto&version=1684248695&width=80&height=80);
+    background-color: rgba(9, 187, 246, 0.383);
+    background-image: url(https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg);
     background-position: center;
     background-size: contain;
   }
@@ -86,16 +86,16 @@
     border-radius: 50%;
     cursor: pointer;
   }
-  .wrapper .post .gallery .gallery-actions .arrow.left {
+  /* .wrapper .post .gallery .gallery-actions .arrow.left {
     left: 10px;
     background-image: url("https://static.cdninstagram.com/rsrc.php/v3/y5/r/TJztmXpWTmS.png");
     background-position: -133px -100px;
     background-size: 430px 401px;
     background-repeat: no-repeat;
-  }
+  } */
   .wrapper .post .gallery .gallery-actions .arrow.right {
     right: 10px;
-    background-image: url("https://static.cdninstagram.com/rsrc.php/v3/y5/r/TJztmXpWTmS.png");
+    background-image: url("https://media.istockphoto.com/id/1131164548/vector/avatar-5.jpg");
     background-position: -165px -100px;
     background-size: 430px 401px;
     background-repeat: no-repeat;
