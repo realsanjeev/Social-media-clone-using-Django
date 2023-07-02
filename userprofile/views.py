@@ -21,14 +21,14 @@ def settings(request):
         user_profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         # If the profile doesn't exist, create a new one for the user
-        user_profile = Profile.objects.create(user=request.user, id_user=request.user.id)
+        redirect('/')
+        # user_profile = Profile.objects.create(user=request.user, id_user=request.user.id)
 
     if request.method == "POST":
         profile_pic = request.FILES.get("profile_pic")
         bio = request.POST.get("bio")
         location = request.POST.get("location")
-        print('---------------', profile_pic
-              )
+        print('---------------', profile_pic)
         if location:
             user_profile.location = location
         if profile_pic == None:
@@ -41,8 +41,6 @@ def settings(request):
 
     context = {"user_profile": user_profile}
     return render(request, template_file, context)
-
-
 
 def login_view(request):
     template_file = os.path.join("user", "signin.html")
@@ -86,3 +84,10 @@ def signup_view(request):
 def logout_view(request):
     logout(request)
     return redirect('/login')
+
+
+@login_required(login_url='login')
+def profile(request):
+    template_file = os.path.join('user', "main_profile.html")
+
+    return render(request, template_file)

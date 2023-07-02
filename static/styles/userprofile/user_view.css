@@ -62,7 +62,8 @@
     margin-bottom: 30px;
   }
   .profile__profile__logo {
-    flex: 1;
+    display: flex;
+    margin-left: 5px;
     text-align: center;
   }
   .profile__profile__logo img {

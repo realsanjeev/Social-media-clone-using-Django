@@ -7,16 +7,23 @@
 
 {% block user_container %}
 
-<form action="" method="post" enctype="multipart/form-data">
-<div id="drop-area">
-    <div class="drop-icon">
-      <i class="fa-light fa-file-upload"></i>
+<form action="/upload" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <h3 style="color: red; text-align: center;">{{message}}</h3>
+  <label for="inputImage" id="inputLabel">Click Here to upload image</label>
+<input type="file" id="inputImage" name="post_pics" accept="image/*"/>
+<div id="preview-image">
+  <div id="placeholder">
+
+    <div id="upload-area" title="select a image">
+
     </div>
-    <div class="drop-text">Drag and drop Image here</div>
   </div>
-  <textarea id="dropped-content" maxlength="5000" spellcheck="true" placeholder="caption"></textarea>
-  <div id="chars">0/5000</div>
-  <button type="submit">Upload Post</button>
+  <label for="post-caption" id="caption">Caption</label>
+  <textarea name="post-caption" id="" cols="30" rows="10" placeholder="caption for image...">
+
+  </textarea>
+  <button type="submit" class="btn-post">Upload Post</button>
 </form>
 <script src="{% static 'scripts/upload.js' %}"></script>
 {% endblock user_container %}

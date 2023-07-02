@@ -61,7 +61,8 @@ form .first .clear
 {
     margin:0 0 0 19px;
 }
-.submit input[type="submit"]
+.submit input[type="submit"],
+textarea
 {
     background-color:#E9BF7B;
     color:white;
@@ -84,4 +85,10 @@ form
 {
     margin:-12px 0 0 0px;
     background-color: white;
+}
+
+.profile-img {
+    height: 100px;
+    border-radius: 50px;
+    width: 100px;
 }
