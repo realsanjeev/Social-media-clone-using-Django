@@ -146,3 +146,7 @@
     border-top: 2px solid #5c5c5c;
     color: #5c5c5c;
   }
+.user-post{
+  max-width: 300px;
+  max-height: 500px;
+}

@@ -5,13 +5,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from userprofile.models import Profile
+from posts.models import Posts
 from userprofile.forms import MyLoginForm, SignUpForm
 
 # Create your views here.
 @login_required(login_url="login", redirect_field_name='login')
 def index(request):
-    template_file = os.path.join("user", "base.html")
-    return render(request, template_file)
+    context = dict()
+    template_files = os.path.join("posts", "home.html")
+    user_profile = Profile.objects.get(user=request.user)
+    post_objs = Posts.objects.all()
+    for post in post_objs:
+        print(post.user)
+    print('----------------------', post_objs)
+    context["user_profile"] = user_profile
+    context["posts"] = post_objs
+    return render(request, template_files, context)
 
 @login_required(login_url="login")
 def settings(request):
@@ -85,9 +94,13 @@ def logout_view(request):
     logout(request)
     return redirect('/login')
 
-
 @login_required(login_url='login')
 def profile(request):
     template_file = os.path.join('user', "main_profile.html")
-
-    return render(request, template_file)
+    context = dict()
+    user_profile = Profile.objects.filter(user=request.user).first()
+    post_objs = Posts.objects.all()
+    
+    context["user_profile"] = user_profile
+    context["posts"] = post_objs
+    return render(request, template_file, context)

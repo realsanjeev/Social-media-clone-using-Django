@@ -1,9 +1,8 @@
 {% extends 'posts/base.html' %}
 
 {% block user_container %}
- 
 <div class="profile__profile">
-    <div class="container d-flex align-items-center">
+    <div class="container" style="margin: 40px;">
 
       <div class="profile__profile__logo">
         <img src="{{user_profile.profile_pics.url}}" alt="Profile Image">
@@ -11,7 +10,7 @@
       <div class="profile__profile__details">
 
         <div class="profile__profile__details__userName">
-          <h4>,<strong>@{{user.username}}</strong></h4>
+          <h4><strong>@{{user.username}}</strong></h4>
           <a href="/settings"><button>
             Edit Profile
           </button></a>
@@ -24,7 +23,7 @@
 
         </div>
         <div class="profile__profile__details__follower my-3">
-          <span><b>135</b> posts</span>
+          <span><b>{{posts|length}}</b> posts</span>
           <button>
             <b>123</b> followers
           </button>
@@ -33,7 +32,8 @@
           </button>
         </div>
         <div class="profile__profile__details__displayName">
-          <h6>Channa Luckmal</h6>
+          <h4>{{user.username}} </h4>
+          <h6>{{user_profile.bio}}</h6>
         </div>
 
       </div>
@@ -54,7 +54,7 @@
             <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
           </svg>
           Posts</button>
-        <button class="tablinks" onclick="openSection(event, 'Videos')">
+        <!-- <button class="tablinks" onclick="openSection(event, 'Videos')">
           <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5zm5-11.8l-6.8-3.9c-.5-.3-1-.3-1.5 0-.4.3-.7.7-.7 1.3v7.8c0 .5.3 1 .8 1.3.2.1.5.2.8.2s.5-.1.8-.2l6.8-3.9c.5-.3.8-.8.8-1.3s-.5-1-1-1.3zm-7.5 5.2V8.1l6.8 3.9-6.8 3.9z"></path>
           </svg>
@@ -70,29 +70,21 @@
             <path d="M18.598 22.002V21.4a3.949 3.949 0 00-3.948-3.949H9.495A3.949 3.949 0 005.546 21.4v.603" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
             <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
           </svg>
-          Tagged</button>
+          Tagged</button> -->
       </div>
 
       <div id="Posts" class="profile__section__tab__tabcontent">
 
         <div class="profile__section__tab__tabcontent__container">
-
+          {% if posts|length == 0 %}
+          <h3>No posts</h3>
+          {% else %}
           <div class="profile__section__tab__tabcontent__container__image">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
+            {% for post in posts %}
+            <a href="{{post.post_img.url}}"><img src="{{post.post_img.url}}" class="img-fluid"></a>
+            {% endfor %}
           </div>
-          <div class="profile__section__tab__tabcontent__container__image">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-          </div>
-          <div class="profile__section__tab__tabcontent__container__image">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-            <img src="https://images.unsplash.com/photo-1485963631004-f2f00b1d6606?auto=format&fit=crop&w=668&q=80" class="img-fluid">
-          </div>
-
+          {% endif %}
         </div>
 
       </div>

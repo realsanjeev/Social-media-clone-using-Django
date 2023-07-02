@@ -5,6 +5,8 @@ urlpatterns = [
     path("", views.home, name="index"),
     path('home', views.home, name="home"),
     path('upload', views.upload_view, name="upload_view"),
+    path('user/<str:username>', views.user_view, name="user"),
     path('posts', views.posts, name="posts"),
+    path('like-post/', views.like_post_view, name="like-post"),
 
 ]
