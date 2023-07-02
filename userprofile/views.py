@@ -4,7 +4,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from userprofile.models import Profile
+from userprofile.models import Profile, FollowerCount
 from posts.models import Posts
 from userprofile.forms import MyLoginForm, SignUpForm
 
@@ -100,7 +100,25 @@ def profile(request):
     context = dict()
     user_profile = Profile.objects.filter(user=request.user).first()
     post_objs = Posts.objects.all()
-    
+    context["num_following"] = FollowerCount.objects.filter(follower=request.user.username).count()
+    context["num_follower"] = FollowerCount.objects.filter(user=request.user.username).count()
     context["user_profile"] = user_profile
     context["posts"] = post_objs
     return render(request, template_file, context)
+
+@login_required(login_url="login")
+def follow_user(request):
+    if request.method == 'POST':
+        new_follower = request.user.username
+        new_following = request.POST.get("following")
+        is_previous_following = FollowerCount.objects.filter(
+            follower=new_follower, 
+            user=new_following
+            ).exists()
+        if not is_previous_following:
+            follow_obj = FollowerCount(follower=new_follower, user=new_following)
+            follow_obj.save()
+        else:
+            FollowerCount.objects.filter(follower=new_follower, user=new_following).delete()
+        return redirect(f'user/{new_following}')
+    return redirect('/')

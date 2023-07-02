@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from userprofile.models import Profile
+from userprofile.models import Profile, FollowerCount
 from posts.models import Posts, LikePost
 
 # Create your views here.
@@ -72,7 +72,6 @@ def like_post_view(request):
     return redirect('/')
 
 def user_view(request, username):
-    print('----------------------', username, '----', type(username))
     template_file = "posts/user.html"
     error_file = "user/notFound.html"
     context = {}
@@ -83,8 +82,12 @@ def user_view(request, username):
     try:
         user_main = User.objects.get(username=username)
         user_profile = Profile.objects.filter(user=user_main).first()
-        print('***********', user_profile.id_user)
         post_objs = Posts.objects.filter(user=username)
+        is_following = FollowerCount.objects.filter(follower=request.user.username, user=username).exists()
+        context["num_following"] = FollowerCount.objects.filter(follower=username).count()
+        context["num_follower"] = FollowerCount.objects.filter(user=username).count()
+        print('-------------',is_following)
+        context["is_following"] = is_following
         context["user"] = user_main
         context["user_profile"] = user_profile
         context["posts"] = post_objs
