@@ -158,3 +158,12 @@ def explore_view(request):
     context['posts'] = Posts.objects.filter(user=request.user.username)
     return render(request, template_file, context)
 
+@login_required
+def notification_view(request):
+    template_file = os.path.join('posts','notification.html')
+    context = {}
+    context['user_profile'] = Profile.objects.filter(user=request.user).first()
+    followed_users = FollowerCount.objects.filter(follower=request.user.username)
+    context['unfollowed_profiles'] = Profile.objects.exclude(Q(user__username__in=followed_users.values('user')) | Q(user__username=request.user.username))
+    print('*'*23, context['unfollowed_profiles'] )
+    return render(request, template_file, context)
