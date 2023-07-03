@@ -1,10 +1,32 @@
 import os
+from itertools import chain
+from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, HttpResponse
+from django.views.generic import TemplateView, ListView
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from userprofile.models import Profile, FollowerCount
 from posts.models import Posts, LikePost
+
+# using class for views
+#  using class for templating
+# class SearchResultsView(ListView):
+#     model = Profile
+#     template_name = 'posts/search.html'
+#     context_object_name = 'profiles'
+
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         object_list = Profile.objects.filter(
+#             Q(user__username__icontains=query) |
+#             Q(user__first_name__icontains=query) |
+#             Q(user__last_name__icontains=query)
+#         )
+#         return object_list
+
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -12,10 +34,23 @@ def home(request):
     context = dict()
     template_files = os.path.join("posts", "home.html")
     user_profile = Profile.objects.filter(user=request.user).first()
-    post_objs = Posts.objects.all()
-    
+    following_lst = list()
+    post_feed = list()
+    following_obj = FollowerCount.objects.filter(follower=request.user.username)
+    if following_obj is None:
+        following_lst = []
+        post_feed = Posts.objects.all()
+    else:
+        for followed_user in following_obj:
+            following_lst.append(followed_user.user)
+        for followed_user in following_lst:
+            posts_objs = Posts.objects.filter(user=followed_user)
+            post_feed.append(posts_objs)
+        post_feed = list(chain(*post_feed))
+        if not len(post_feed):
+            post_feed = Posts.objects.all()
     context["user_profile"] = user_profile
-    context["posts"] = post_objs
+    context["posts"] = post_feed
     return render(request, template_files, context)
 
 @login_required(login_url="login")
@@ -100,4 +135,26 @@ def user_view(request, username):
     except Profile.DoesNotExist:
         err_msg = {"message": f"Profile not found for {username}"}
         return render(request, error_file, err_msg)
+
+def search_user(request):
+    template_file = os.path.join("posts", "search.html")
+    context = dict()
+    context["user_profile"] = Profile.objects.filter(user=request.user).first()
+    if request.method == "GET":
+        query = request.GET.get('q')
+        context["query"] = query
+        context["object_list"] = Profile.objects.filter(
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query)
+        )
+    return render(request, template_file, context)
+
+@login_required(login_url='login')
+def explore_view(request):
+    template_file = os.path.join('posts', 'explore.html')
+    context = dict()
+    context['user_profile'] = Profile.objects.filter(user=request.user).first()
+    context['posts'] = Posts.objects.filter(user=request.user.username)
+    return render(request, template_file, context)
 

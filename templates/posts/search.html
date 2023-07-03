@@ -1,0 +1,24 @@
+{% extends "posts/base.html" %}
+
+
+{% block user_container %}
+<div class="container" style="margin: 10px;">
+    <h2 class="search">Search for '{{query}}'</h2>
+    {% for user_obj in object_list %}
+    <a href="/user/{{user_obj.user.username}}" style="text-decoration: none; color: black; padding: 5px;margin: 3px;">
+    <div class="user-container" style="display: flex; justify-content: center; align-items: center;justify-content: flex-start;">
+        <img src="{{user_obj.profile_pics.url}}" alt="{{user_obj.user}}" height="30px" width="30px" style="padding: 5px;">
+        <div class="user-info">
+            <h3>@{{ user_obj.user.username }}</h3>
+            <h4>{{user_obj.user.first_name}} {{user_obj.user.last_name}}</h4>
+<script>
+    console.log(user_obj)
+</script>
+        </div>
+        
+    </div>
+</a>
+    {% endfor %}
+</div>
+
+{% endblock user_container %}

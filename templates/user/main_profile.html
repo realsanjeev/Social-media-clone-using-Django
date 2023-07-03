@@ -11,7 +11,7 @@
 
         <div class="profile__profile__details__userName">
           <h4><strong>@{{user.username}}</strong></h4>
-          <a href="/settings"><button>
+          <a href="/settings"><button style="    border-style: double;">
             Edit Profile
           </button></a>
           <a href="/settings"><button>
@@ -82,7 +82,8 @@
           <h3>No posts</h3>
           {% else %}
             {% for post in posts %}
-            <a href="{{post.post_img.url}}"><img src="{{post.post_img.url}}" class="img-fluid"></a>
+            <a href="{{post.post_img.url}}" style="padding: 10px;">
+              <img src="{{post.post_img.url}}" class="img-fluid" style="padding: 10px;"></a>
             {% endfor %}
           </div>
           {% endif %}

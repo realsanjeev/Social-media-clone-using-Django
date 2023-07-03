@@ -132,7 +132,8 @@
   .profile__section__tab__tabcontent__container__image {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: row;
+    flex-direction: column-reverse;
+
   }
   .profile__section__tab__tabcontent__container__image img {
     width: 30%;
