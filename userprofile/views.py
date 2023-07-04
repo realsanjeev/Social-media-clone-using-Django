@@ -4,7 +4,7 @@ from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from userprofile.models import Profile, FollowerCount
+from userprofile.models import Profile, FollowerCount, Contact
 from posts.models import Posts
 from userprofile.forms import MyLoginForm, SignUpForm
 
@@ -122,3 +122,34 @@ def follow_user(request):
             FollowerCount.objects.filter(follower=new_follower, user=new_following).delete()
         return redirect(f'user/{new_following}')
     return redirect('/')
+
+
+def about_view(request):
+    template_file = os.path.join('public', 'about.html')
+    return render(request, template_file)
+
+def faq_view(request):
+    template_file = os.path.join('public', 'faq.html')
+    return render(request, template_file)
+
+def about_view(request):
+    template_file = os.path.join('public', 'about.html')
+    return render(request, template_file)
+
+def contact_view(request):
+    template_file = os.path.join('public', 'contact.html')
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        contact_obj = Contact(name=name, email=email, message=message)
+        contact_obj.save()
+        message = {"message": 'Your request is successfully sent'}
+        return render(request, template_file, message)
+
+    return render(request, template_file)
+
+def features_view(request):
+    template_file = os.path.join('public', 'features.html')
+    return render(request, template_file)

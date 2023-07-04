@@ -1,0 +1,98 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+: Frequently Asked Questions
+{% endblock title %}
+
+{% block auth_container %}
+<style>
+        /* Main Content Styles */
+        main {
+      padding: 20px;
+    }
+
+    section {
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      display: block;
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+</style>
+<main>
+    <section>
+      <h1>Contact Us</h1>
+      <p>If you have any questions, feedback, or concerns, we would love to hear from you. Please reach out to our support team using the contact information below:</p>
+      <ul>
+        <li>Email: support@socialmediaclone.com</li>
+        <li>Phone: +1 123-456-7890</li>
+        <li>Address: 123 Main Street, City, Country</li>
+      </ul>
+      <p>You can also use the contact form below to send us a message:</p>
+      <h2 class="message">{{message}}</h2>
+      <script>
+        // Get the message element
+        const messageElement = document.getElementById("message");
+    
+        // Set a timeout to hide the message after 3 seconds
+        setTimeout(() => {
+          messageElement.style.display = "none";
+        }, 3000);
+      </script>
+      <form action="#" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+        
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+    
+  </main>
+{% endblock auth_container %}

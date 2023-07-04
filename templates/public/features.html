@@ -1,0 +1,78 @@
+{% extends 'user/base.html' %}
+
+{% block title %}
+: Frequently Asked Questions
+{% endblock title %}
+
+{% block auth_container %}
+<style>
+    /* Main Content Styles */
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+h2 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+p {
+  margin-bottom: 10px;
+}
+</style>
+<main>
+    <section>
+      <h1>Features</h1>
+      <ul>
+        <li>
+          <h2>User Profiles</h2>
+          <p>Create your personalized profile with information about yourself, profile picture, and privacy settings. Customize your profile to showcase your interests and personality.</p>
+        </li>
+        <li>
+          <h2>News Feed</h2>
+          <p>Stay updated with the latest posts from your friends and accounts you follow. The news feed displays a chronological list of posts, photos, and videos shared by your connections.</p>
+        </li>
+        <li>
+          <h2>Content Sharing</h2>
+          <p>Share your thoughts, photos, videos, and links with your network. Express yourself through text posts or enhance your content with multimedia elements.</p>
+        </li>
+        <li>
+          <h2>Interactions</h2>
+          <p>Engage with other users by liking, commenting on, and sharing their posts. Start conversations, express your support, or share interesting content with your connections.</p>
+        </li>
+        <li>
+          <h2>Direct Messaging</h2>
+          <p>Communicate privately with your friends and connections through direct messaging. Share messages, photos, and videos in a secure and private conversation.</p>
+        </li>
+        <li>
+          <h2>Groups and Communities</h2>
+          <p>Join groups and communities based on your interests or create your own. Connect with like-minded individuals, participate in discussions, and share content within these communities.</p>
+        </li>
+        <li>
+          <h2>Privacy Controls</h2>
+          <p>Manage your privacy settings to control who can view your profile and posts. Customize your privacy preferences to ensure your content is shared with the right audience.</p>
+        </li>
+        <li>
+          <h2>Content Moderation</h2>
+          <p>We prioritize creating a safe and inclusive environment. Our robust content moderation system helps detect and prevent the sharing of inappropriate or harmful content.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
+{% endblock auth_container %}

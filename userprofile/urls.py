@@ -8,4 +8,9 @@ urlpatterns = [
     path('settings', views.settings, name="account_setting"),
     path('profile', views.profile, name="profile"),
     path('follow', views.follow_user, name="follow"),
+
+    path('about', views.about_view, name='about'),
+    path('faq', views.faq_view, name='faq'),
+    path('features', views.features_view, name='features'),
+    path('contacts', views.contact_view, name='contacts'),
 ]
