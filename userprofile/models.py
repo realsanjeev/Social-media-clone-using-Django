@@ -21,7 +21,6 @@ class FollowerCount(models.Model):
     follower = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
 
-
 class Contact(models.Model):
     name = models.TextField()
     email = models.EmailField()

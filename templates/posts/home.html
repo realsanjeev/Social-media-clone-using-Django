@@ -44,11 +44,14 @@
         <span class="description"><a class="username" href="/user/{{post.user}}">{{post.user}}</a> {{post.caption}}</span>
       </div>
       {% endif %}
-      
+      <form action="/comment/?post_id={{post.id}}" method="post">
+        {% csrf_token %}
       <div class="comment">
-        <input type="text" placeholder="Add a comment..."/>
-        <a class="publish-btn highlight-link">Publish</a>
+        <input type="text" placeholder="Add a comment..." name="comment"/>
+        <a class="publish-btn highlight-link">
+          <button type="submit" style="border-style: none;display: inherit;background: none;color: unset;font-weight: 700;">Publish</button></a>
       </div>
+    </form>
     </div>
     {% endfor %}
 </div>

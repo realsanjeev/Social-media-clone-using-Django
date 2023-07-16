@@ -6,7 +6,6 @@
 {% endblock link %} 
 
 {% block user_container %}
-
 <form action="/upload" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <h3 style="color: red; text-align: center;">{{message}}</h3>

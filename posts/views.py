@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from userprofile.models import Profile, FollowerCount
-from posts.models import Posts, LikePost
+from posts.models import Posts, LikePost, CommentPost
 
 # using class for views
 #  using class for templating
@@ -86,26 +86,6 @@ def upload_view(request):
 
     return render(request, template_files, context)
 
-@login_required(login_url='login')
-def like_post_view(request):
-    username = request.user.username
-    post_id = request.GET.get("post_id")
-    post_obj = Posts.objects.get(id=post_id)
-    is_liked_before = LikePost.objects.filter(username=username, post_id=post_id).exists()
-
-    if not is_liked_before:
-        like_post = LikePost(username=username, post_id=post_id)
-        like_post.save()
-        post_obj.likes += 1
-        post_obj.save()
-        return redirect('/')
-    else:
-        post_obj.likes -= 1
-        LikePost.objects.filter(username=username, post_id=post_id).delete()
-        post_obj.save()
-
-    return redirect('/')
-
 def user_view(request, username):
     template_file = "posts/user.html"
     error_file = "user/notFound.html"
@@ -158,7 +138,7 @@ def explore_view(request):
     context['posts'] = Posts.objects.filter(user=request.user.username)
     return render(request, template_file, context)
 
-@login_required
+@login_required(login_url='login')
 def notification_view(request):
     template_file = os.path.join('posts','notification.html')
     context = {}
@@ -167,3 +147,33 @@ def notification_view(request):
     context['unfollowed_profiles'] = Profile.objects.exclude(Q(user__username__in=followed_users.values('user')) | Q(user__username=request.user.username))
     print('*'*23, context['unfollowed_profiles'] )
     return render(request, template_file, context)
+
+@login_required(login_url='login')
+def like_post_view(request):
+    username = request.user.username
+    post_id = request.GET.get("post_id")
+    post_obj = Posts.objects.get(id=post_id)
+    is_liked_before = LikePost.objects.filter(username=username, post_id=post_id).exists()
+
+    if not is_liked_before:
+        like_post = LikePost(username=username, post_id=post_id)
+        like_post.save()
+        post_obj.likes += 1
+        post_obj.save()
+        return redirect('/')
+    else:
+        post_obj.likes -= 1
+        LikePost.objects.filter(username=username, post_id=post_id).delete()
+        post_obj.save()
+
+    return redirect('/')
+
+@login_required(login_url='login')
+def comment_view(request):
+    username = request.user.username
+    post_id = request.GET.get("post_id")
+    if request.method=="POST":
+        new_comment = request.POST.get('comment')
+        comment_obj = CommentPost(username=username, post_id=post_id, comment=new_comment)
+        comment_obj.save()
+    return HttpResponse('Coment box is working')

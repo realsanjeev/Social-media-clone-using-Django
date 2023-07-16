@@ -15,3 +15,8 @@ class Posts(models.Model):
 class LikePost(models.Model):
     post_id = models.CharField(max_length=500)
     username = models.CharField(max_length=100)
+
+class CommentPost(models.Model):
+    post_id = models.CharField(max_length=500)
+    username = models.CharField(max_length=100)
+    comment = models.TextField(null=True)

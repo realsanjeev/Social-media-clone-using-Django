@@ -123,7 +123,6 @@ def follow_user(request):
         return redirect(f'user/{new_following}')
     return redirect('/')
 
-
 def about_view(request):
     template_file = os.path.join('public', 'about.html')
     return render(request, template_file)
