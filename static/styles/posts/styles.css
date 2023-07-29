@@ -38,6 +38,7 @@
     padding: 15px 5px;
     display: flex;
     align-items: center;
+    background-color: beige;
   }
   .wrapper .post .header .avatar {
     width: 32px;

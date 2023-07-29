@@ -83,9 +83,9 @@
     <div id="Posts" class="profile__section__tab__tabcontent">
 
       <div class="profile__section__tab__tabcontent__container">
-
-        <div class="profile__section__tab__tabcontent__container__image">
+        
           {% if posts|length == 0 %}
+          <div class="profile__section__tab__tabcontent__container__image">
           <h3 style="text-align: center; padding:10px">No posts</h3>
           <div class="profile__section__tab__tabcontent__container">
 
@@ -96,9 +96,8 @@
               {% endfor %}
             </div>
           </div>
-          {% endif %}
         </div>
-
+        {% endif %}
       </div>
 
     </div>

@@ -89,7 +89,7 @@ def upload_view(request):
             return render(request, template_files, context)  # Corrected this line to return the response.
 
         else:
-            new_post_obj = Post(user=request.user.username, post_img=post_pics, caption=caption)
+            new_post_obj = Post(user=request.user, post_img=post_pics, caption=caption)
             new_post_obj.save()
             return redirect('/')
 
