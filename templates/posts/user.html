@@ -2,60 +2,66 @@
 
 {% block user_container %}
 <div class="profile__profile">
-    <div class="container d-flex align-items-center" style="margin-left: 40px;">
+  <div class="container d-flex align-items-center" style="margin-left: 40px;">
 
-      <div class="profile__profile__logo">
-        <img src="{{other_user_profile.profile_pics.url}}" alt="Profile Image">
-      </div>
-      <div class="profile__profile__details">
+    <div class="profile__profile__logo">
+      <img src="{{other_user_profile.profile_pics.url}}" alt="Profile Image">
+    </div>
+    <div class="profile__profile__details">
 
-        <div class="profile__profile__details__userName" style="margin-top: 10px;">
-          <h4><strong>@{{search_user_main.username}}</strong></h4>
-          <form action="/follow" method="post">
-            {% csrf_token %}
-            <input type="hidden" hidden value="{{search_user_main.username}}" name="following" />
+      <div class="profile__profile__details__userName" style="margin-top: 10px;">
+        <h4><strong>@{{search_user_main.username}}</strong></h4>
+        <form action="/follow" method="post">
+          {% csrf_token %}
+          <input type="hidden" hidden value="{{search_user_main.username}}" name="following" />
           <a href="/follow"><button style="border-color: black; border-style: groove;">
-            {% if is_following %}
-            Following
-            {% else %}
-            Follow
-            {% endif %}
-          </button></a>
+              {% if is_following %}
+              Following
+              {% else %}
+              Follow
+              {% endif %}
+            </button></a>
         </form>
-        </div>
-        <div class="profile__profile__details__follower my-3">
-          <span><b>{{posts|length}}</b> posts</span>
-          <button>
-            <b>{{num_follower}}</b> followers
-          </button>
-          <button>
-            <b>{{num_following}}</b> following
-          </button>
-        </div>
-        <div class="profile__profile__details__displayName">
-          <h4>{{search_user_main.first_name}} {{search_user_main.last_name}}</h4>
-          <h5>{{other_other_user_profile.bio}}</h5>
-        </div>
-
+      </div>
+      <div class="profile__profile__details__follower my-3">
+        <span><b>{{posts|length}}</b> posts</span>
+        <button>
+          <b>{{num_follower}}</b> followers
+        </button>
+        <button>
+          <b>{{num_following}}</b> following
+        </button>
+      </div>
+      <div class="profile__profile__details__displayName">
+        <h4>{{search_user_main.first_name}} {{search_user_main.last_name}}</h4>
+        <h5>{{other_other_user_profile.bio}}</h5>
       </div>
 
     </div>
 
   </div>
-<div class="profile__section">
-    <div class="container">
 
-      <div class="profile__section__tab">
-        <button class="tablinks" onclick="openSection(event, 'Posts')" id="defaultOpen">
-          <svg aria-label="" class="_ab6-" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-            <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3"></rect>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="14.985" x2="14.985" y1="3" y2="21"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="9.015" y2="9.015"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
-          </svg>
-          Posts</button>
-        <!-- <button class="tablinks" onclick="openSection(event, 'Videos')">
+</div>
+<div class="profile__section">
+  <div class="container">
+
+    <div class="profile__section__tab">
+      <button class="tablinks" onclick="openSection(event, 'Posts')" id="defaultOpen">
+        <svg aria-label="" class="_ab6-" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24"
+          width="12">
+          <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" width="18" x="3" y="3"></rect>
+          <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            x1="9.015" x2="9.015" y1="3" y2="21"></line>
+          <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            x1="14.985" x2="14.985" y1="3" y2="21"></line>
+          <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            x1="21" x2="3" y1="9.015" y2="9.015"></line>
+          <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            x1="21" x2="3" y1="14.985" y2="14.985"></line>
+        </svg>
+        Posts</button>
+      <!-- <button class="tablinks" onclick="openSection(event, 'Videos')">
           <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5zm5-11.8l-6.8-3.9c-.5-.3-1-.3-1.5 0-.4.3-.7.7-.7 1.3v7.8c0 .5.3 1 .8 1.3.2.1.5.2.8.2s.5-.1.8-.2l6.8-3.9c.5-.3.8-.8.8-1.3s-.5-1-1-1.3zm-7.5 5.2V8.1l6.8 3.9-6.8 3.9z"></path>
           </svg>
@@ -72,43 +78,43 @@
             <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
           </svg>
           Tagged</button> -->
-      </div>
+    </div>
 
-      <div id="Posts" class="profile__section__tab__tabcontent">
+    <div id="Posts" class="profile__section__tab__tabcontent">
 
-        <div class="profile__section__tab__tabcontent__container">
+      <div class="profile__section__tab__tabcontent__container">
 
-          <div class="profile__section__tab__tabcontent__container__image">
-            {% if posts|length == 0 %}
-              <h3 style="text-align: center; padding:10px">No posts</h3>
-            <div class="profile__section__tab__tabcontent__container">
-              
-              {% else %}
-              <div class="profile__section__tab__tabcontent__container__image">
-                {% for post in posts reversed %}
-                <a href="{{post.post_img.url}}"><img src="{{post.post_img.url}}" class="img-fluid"></a>
-                {% endfor %}
-              </div>
+        <div class="profile__section__tab__tabcontent__container__image">
+          {% if posts|length == 0 %}
+          <h3 style="text-align: center; padding:10px">No posts</h3>
+          <div class="profile__section__tab__tabcontent__container">
+
+            {% else %}
+            <div class="profile__section__tab__tabcontent__container__image">
+              {% for post in posts reversed %}
+              <a href="{{post.post_img.url}}"><img src="{{post.post_img.url}}" class="img-fluid"></a>
+              {% endfor %}
             </div>
-            {% endif %}
           </div>
-
+          {% endif %}
         </div>
 
       </div>
 
-      <div id="Videos" class="profile__section__tab__tabcontent">
+    </div>
 
-      </div>
-
-      <div id="Saved" class="profile__section__tab__tabcontent">
-
-      </div>
-
-      <div id="Tagged" class="profile__section__tab__tabcontent">
-
-      </div>
+    <div id="Videos" class="profile__section__tab__tabcontent">
 
     </div>
+
+    <div id="Saved" class="profile__section__tab__tabcontent">
+
+    </div>
+
+    <div id="Tagged" class="profile__section__tab__tabcontent">
+
+    </div>
+
   </div>
+</div>
 {% endblock user_container %}

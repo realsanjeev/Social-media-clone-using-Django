@@ -28,14 +28,7 @@
     font-size: 14px;
   }
   
-  .wrapper {
-    max-width: 1024px;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  .wrapper { max-width: 1024px; height: 100%; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; flex-direction: column;
   }
   .wrapper .post {
     width: 470px;

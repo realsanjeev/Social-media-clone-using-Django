@@ -187,10 +187,11 @@ def like_post_view(request):
 
 @login_required(login_url='login')
 def comment_view(request):
-    username = request.user.username
     post_id = request.GET.get("post_id")
     if request.method=="POST":
         new_comment = request.POST.get('comment')
-        comment_obj = CommentPost(username=username, post_id=post_id, comment=new_comment)
+        comment_obj = CommentPost(username=request.user, 
+                                  post_id=post_id, 
+                                  comment=new_comment)
         comment_obj.save()
     return HttpResponse('Coment box is working')
