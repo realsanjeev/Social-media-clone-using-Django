@@ -12,6 +12,11 @@
   flex-wrap: wrap;
   flex-direction: column;
 }
+.upload-post{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 #upload-area {
   width: 40vw;

@@ -17,7 +17,6 @@ def index(request):
     post_objs = Post.objects.all()
     for post in post_objs:
         print(post.user)
-    print('----------------------', post_objs)
     context["user_profile"] = user_profile
     context["posts"] = post_objs
     return render(request, template_files, context)
@@ -99,7 +98,7 @@ def profile(request):
     template_file = os.path.join('user', "main_profile.html")
     context = dict()
     user_profile = Profile.objects.filter(user=request.user).first()
-    post_objs = Post.objects.all()
+    post_objs = Post.objects.filter(user=request.user.username)
     context["num_following"] = FollowerCount.objects.filter(follower=request.user.username).count()
     context["num_follower"] = FollowerCount.objects.filter(user=request.user.username).count()
     context["user_profile"] = user_profile
@@ -111,6 +110,8 @@ def follow_user(request):
     if request.method == 'POST':
         new_follower = request.user.username
         new_following = request.POST.get("following")
+        
+        print('----------------------', new_following)
         is_previous_following = FollowerCount.objects.filter(
             follower=new_follower, 
             user=new_following

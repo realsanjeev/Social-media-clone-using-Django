@@ -9,24 +9,23 @@
 
 
 
-{{% block user_container %}
+{% block user_container %}
 <h1 style="padding: 5px;">Suggestion to follow</h1>
 {% for suggestion in unfollowed_profiles %}
-<div class="wrapper">
-<div class="post">
-
-
 
 <div class="header">
+  <form action="/follow" method="post">
+    {% csrf_token %}
     <div class="avatar"></div>
-    <a href="/user/{{suggestion.user.username}}" target="_blank" class="username" style="    display: contents;">
+    <a href="/user/{{suggestion.user.username}}" class="username" style="display: contents;">
       @{{suggestion.user.username}}
     </a>
     <div class="date-separator"></div>
-    <div class="date"></div>
-    <a href="/follow" target="_blank" class="follow-btn highlight-link">Follow</a>
+    <input type="hidden" hidden value="{{suggestion.user.username}}" name="following" />
+    <button type="submit">
+      Follow
+    </button>
+  </form>
   </div>
-</div>
-</div>
 {% endfor %}
 {% endblock user_container %}

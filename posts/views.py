@@ -95,34 +95,38 @@ def upload_view(request):
 
     return render(request, template_files, context)
 
-def user_view(request, username):
+def user_view(request, search_user):
+    context = dict()
     template_file = "posts/user.html"
     error_file = "user/notFound.html"
-    context = {}
     
-    if request.user.username == username:
+    if request.user.username == search_user:
         return redirect("/profile")
 
     try:
-        user_main = User.objects.get(username=username)
-        user_profile = Profile.objects.filter(user=user_main).first()
-        post_objs = Post.objects.filter(user=username)
-        is_following = FollowerCount.objects.filter(follower=request.user.username, user=username).exists()
-        context["num_following"] = FollowerCount.objects.filter(follower=username).count()
-        context["num_follower"] = FollowerCount.objects.filter(user=username).count()
+        search_user_main = User.objects.get(username=search_user)
+        other_user_profile = Profile.objects.filter(user=search_user_main).first()
+        post_objs = Post.objects.filter(user=search_user)
+        is_following = FollowerCount.objects.filter(
+            follower=request.user.username, user=search_user).exists()
+        
+        context["user_profile"] = Profile.objects.get(user=request.user)
+        context["num_following"] = FollowerCount.objects.filter(
+            follower=search_user).count()
+        context["num_follower"] = FollowerCount.objects.filter(user=search_user).count()
         print('-------------',is_following)
         context["is_following"] = is_following
-        context["user"] = user_main
-        context["user_profile"] = user_profile
+        context["search_user_main"] = search_user_main
+        context["other_user_profile"] = other_user_profile
         context["posts"] = post_objs
         return render(request, template_file, context)
     
     except User.DoesNotExist:
-        err_msg = {"message": f"user/{username} not found"}
+        err_msg = {"message": f"user/{search_user} not found"}
         return render(request, error_file, err_msg)
     
     except Profile.DoesNotExist:
-        err_msg = {"message": f"Profile not found for {username}"}
+        err_msg = {"message": f"Profile not found for {search_user}"}
         return render(request, error_file, err_msg)
 
 def search_user(request):
@@ -149,12 +153,16 @@ def explore_view(request):
 
 @login_required(login_url='login')
 def notification_view(request):
+    context = dict()
     template_file = os.path.join('posts','notification.html')
-    context = {}
     context['user_profile'] = Profile.objects.filter(user=request.user).first()
     followed_users = FollowerCount.objects.filter(follower=request.user.username)
-    context['unfollowed_profiles'] = Profile.objects.exclude(Q(user__username__in=followed_users.values('user')) | Q(user__username=request.user.username))
+    context['unfollowed_profiles'] = Profile.objects.exclude(
+        Q(user__username__in=followed_users.values('user')) | 
+        Q(user__username=request.user.username)
+        )
     print('*'*23, context['unfollowed_profiles'] )
+
     return render(request, template_file, context)
 
 @login_required(login_url='login')
@@ -165,7 +173,7 @@ def like_post_view(request):
     is_liked_before = LikePost.objects.filter(username=username, post_id=post_id).exists()
 
     if not is_liked_before:
-        like_post = LikePost(username=username, post_id=post_id)
+        like_post = LikePost(username=request.user, post_id=post_id)
         like_post.save()
         post_obj.likes += 1
         post_obj.save()

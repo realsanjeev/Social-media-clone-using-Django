@@ -6,7 +6,7 @@
 {% endblock link %} 
 
 {% block user_container %}
-<form action="/upload" method="post" enctype="multipart/form-data">
+<form action="/upload" method="post" enctype="multipart/form-data" class="upload-post">
   {% csrf_token %}
   <h3 style="color: red; text-align: center;">{{message}}</h3>
   <label for="inputImage" id="inputLabel">Click Here to upload image</label>
