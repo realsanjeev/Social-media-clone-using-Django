@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from userprofile.models import Profile, FollowerCount, Contact
-from posts.models import Posts
+from posts.models import Post
 from userprofile.forms import MyLoginForm, SignUpForm
 
 # Create your views here.
@@ -14,7 +14,7 @@ def index(request):
     context = dict()
     template_files = os.path.join("posts", "home.html")
     user_profile = Profile.objects.get(user=request.user)
-    post_objs = Posts.objects.all()
+    post_objs = Post.objects.all()
     for post in post_objs:
         print(post.user)
     print('----------------------', post_objs)
@@ -99,7 +99,7 @@ def profile(request):
     template_file = os.path.join('user', "main_profile.html")
     context = dict()
     user_profile = Profile.objects.filter(user=request.user).first()
-    post_objs = Posts.objects.all()
+    post_objs = Post.objects.all()
     context["num_following"] = FollowerCount.objects.filter(follower=request.user.username).count()
     context["num_follower"] = FollowerCount.objects.filter(user=request.user.username).count()
     context["user_profile"] = user_profile

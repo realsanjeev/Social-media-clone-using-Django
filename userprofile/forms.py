@@ -51,7 +51,8 @@ class SignUpForm(UserCreationForm):
             'class': 'input-control input-field',
             'placeholder': 'Password'
             }),
-        help_text="Enter the same password as before, for verification.")
+        # help_text="Enter the same password as before, for verification."
+        )
     password2 = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'class': 'input-control input-field',

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from userprofile.models import Profile, FollowerCount
-from posts.models import Posts, LikePost, CommentPost
+from posts.models import Post, LikePost, CommentPost
 
 # using class for views
 #  using class for templating
@@ -33,22 +33,30 @@ from posts.models import Posts, LikePost, CommentPost
 def home(request):
     context = dict()
     template_files = os.path.join("posts", "home.html")
-    user_profile = Profile.objects.filter(user=request.user).first()
+    try:
+        user_profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        user_obj = User.objects.get(username=request.user)
+        new_profile = Profile.objects.create(user=user_obj, id_user=user_obj.id)
+        new_profile.save()
+        user_profile = Profile.objects.get(user=request.user)
+
     following_lst = list()
     post_feed = list()
     following_obj = FollowerCount.objects.filter(follower=request.user.username)
     if following_obj is None:
         following_lst = []
-        post_feed = Posts.objects.all()
+        post_feed = Post.objects.all()
     else:
         for followed_user in following_obj:
             following_lst.append(followed_user.user)
         for followed_user in following_lst:
-            posts_objs = Posts.objects.filter(user=followed_user)
+            posts_objs = Post.objects.filter(user=followed_user)
             post_feed.append(posts_objs)
         post_feed = list(chain(*post_feed))
         if not len(post_feed):
-            post_feed = Posts.objects.all()
+            post_feed = Post.objects.all()
+            print("()"*18, post_feed[0])
     context["user_profile"] = user_profile
     context["posts"] = post_feed
     return render(request, template_files, context)
@@ -58,7 +66,7 @@ def posts(request):
     context = dict()
     template_files = os.path.join("posts", "home.html")
     user_profile = Profile.objects.get(user=request.user)
-    post_objs = Posts.objects.all()
+    post_objs = Post.objects.all()
     
     print('----------------------',post_objs)
     context["user_profile"] = user_profile
@@ -74,13 +82,14 @@ def upload_view(request):
     if request.method == 'POST':
         post_pics = request.FILES.get('post_pics')
         caption = request.POST.get('caption')
+        print("#"*100, caption)
 
         if post_pics is None:
             context["message"] = "Please upload the Image to post"
             return render(request, template_files, context)  # Corrected this line to return the response.
 
         else:
-            new_post_obj = Posts(user=request.user.username, post_img=post_pics, caption=caption)
+            new_post_obj = Post(user=request.user.username, post_img=post_pics, caption=caption)
             new_post_obj.save()
             return redirect('/')
 
@@ -97,7 +106,7 @@ def user_view(request, username):
     try:
         user_main = User.objects.get(username=username)
         user_profile = Profile.objects.filter(user=user_main).first()
-        post_objs = Posts.objects.filter(user=username)
+        post_objs = Post.objects.filter(user=username)
         is_following = FollowerCount.objects.filter(follower=request.user.username, user=username).exists()
         context["num_following"] = FollowerCount.objects.filter(follower=username).count()
         context["num_follower"] = FollowerCount.objects.filter(user=username).count()
@@ -135,7 +144,7 @@ def explore_view(request):
     template_file = os.path.join('posts', 'explore.html')
     context = dict()
     context['user_profile'] = Profile.objects.filter(user=request.user).first()
-    context['posts'] = Posts.objects.filter(user=request.user.username)
+    context['posts'] = Post.objects.filter(user=request.user.username)
     return render(request, template_file, context)
 
 @login_required(login_url='login')
@@ -152,7 +161,7 @@ def notification_view(request):
 def like_post_view(request):
     username = request.user.username
     post_id = request.GET.get("post_id")
-    post_obj = Posts.objects.get(id=post_id)
+    post_obj = Post.objects.get(id=post_id)
     is_liked_before = LikePost.objects.filter(username=username, post_id=post_id).exists()
 
     if not is_liked_before:

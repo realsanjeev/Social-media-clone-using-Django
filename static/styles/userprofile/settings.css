@@ -64,8 +64,8 @@ form .first .clear
 .submit input[type="submit"],
 textarea
 {
-    background-color:#E9BF7B;
-    color:white;
+    background-color:#ececec;
+    color:rgb(8, 8, 8);
     font-weight: bold;
     margin:0 0 20px 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -74,8 +74,6 @@ textarea
     text-transform: capitalize;
     width:160px;
     height:33px;
-    text-align:center;
-    padding:4px 10px 2px 10px;
 }
 .submit input[type="submit"]:hover
 {
