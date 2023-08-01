@@ -157,11 +157,11 @@ def notification_view(request):
     template_file = os.path.join('posts','notification.html')
     context['user_profile'] = Profile.objects.filter(user=request.user).first()
     followed_users = FollowerCount.objects.filter(follower=request.user.username)
-    context['unfollowed_profiles'] = Profile.objects.exclude(
+    context['suggested_profiles'] = Profile.objects.exclude(
         Q(user__username__in=followed_users.values('user')) | 
         Q(user__username=request.user.username)
         )
-    print('*'*23, context['unfollowed_profiles'] )
+    print('*'*23, context['suggested_profiles'] )
 
     return render(request, template_file, context)
 

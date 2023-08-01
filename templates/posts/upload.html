@@ -6,7 +6,9 @@
 {% endblock link %}
 
 {% block user_container %}
-<form action="/upload" method="post" enctype="multipart/form-data" class="upload-post">
+<div>
+<div class="upload-post">
+<form action="/upload" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <h3 style="color: red; text-align: center;">{{message}}</h3>
   <label for="inputImage" id="inputLabel">Click Here to upload image</label>
@@ -24,5 +26,7 @@
   </textarea>
     <button type="submit" class="btn-post">Upload Post</button>
 </form>
+</div>
+</div>
 <script src="{% static 'scripts/upload.js' %}"></script>
 {% endblock user_container %}

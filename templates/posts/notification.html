@@ -10,22 +10,28 @@
 
 
 {% block user_container %}
-<h1 style="padding: 5px;">Suggestion to follow</h1>
-{% for suggestion in unfollowed_profiles %}
-
-<div class="header">
-  <form action="/follow" method="post">
-    {% csrf_token %}
-    <div class="avatar"></div>
-    <a href="/user/{{suggestion.user.username}}" class="username" style="display: contents;">
-      @{{suggestion.user.username}}
-    </a>
-    <div class="date-separator"></div>
-    <input type="hidden" hidden value="{{suggestion.user.username}}" name="following" />
-    <button type="submit">
-      Follow
-    </button>
-  </form>
+<div style="display: flex; justify-content: center;">
+  {% if not suggested_profiles %}
+  <h3>All up-to-date</h3>
+{% else %}
+  <h1 style="padding: 5px;">Suggestions to follow</h1>
+  {% for suggestion in suggested_profiles %}
+    <div class="header">
+      <form action="/follow" method="post">
+        {% csrf_token %}
+        <div class="avatar"></div>
+        <a href="/user/{{suggestion.user.username}}" class="username" style="display: contents;">
+          @{{suggestion.user.username}}
+        </a>
+        <div class="date-separator"></div>
+        <input type="hidden" hidden value="{{suggestion.user.username}}" name="following" />
+        <button type="submit">
+          Follow
+        </button>
+      </form>
+    </div>
+  {% endfor %}
+{% endif %}
 </div>
-{% endfor %}
+
 {% endblock user_container %}
