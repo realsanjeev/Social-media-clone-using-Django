@@ -82,7 +82,7 @@
           <h3>No posts</h3>
           {% else %}
             {% for post in posts %}
-            <a href="{{post.post_img.url}}" style="padding: 10px;">
+            <a href=="/post/{{post.id}}" style="padding: 10px;">
               <img src="{{post.post_img.url}}" class="img-fluid" style="padding: 10px;"></a>
             {% endfor %}
           </div>

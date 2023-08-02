@@ -1,5 +1,87 @@
 {% extends "posts/base.html" %}
 
+{% block link %} {% load static %}
+<link rel="stylesheet" href="{% static 'styles/posts//styles.css' %}" />
+{% endblock link %}
+
 {% block user_container %}
-<h1>Post</h1>
+<div class="wrapper">
+    {% if message %}
+    <h3>{{ message }}</h3>
+    {% else %}
+    <div class="post">
+        <div class="header">
+            <div class="avatar"></div>
+            <a href="/user/{{post.user}}" class="username">
+                @{{post.user}}
+            </a>
+            <div class="date-separator">•</div>
+            <div id="date">{{ post.created_at }}</div>
+
+        </div>
+        <img src="{{ post.post_img.url }}" alt="{{ post.caption }} image" class="user-post" />
+        <div class="post-actions">
+            <a href="like-post/?post_id={{post.id}}">
+                <svg aria-label="J’aime" class="like" color="rgb(38, 38, 38)" fill="rgb(38, 38, 38)" height="24"
+                    role="img" viewBox="0 0 24 24" width="24">
+                    <path
+                        d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z">
+                    </path>
+                </svg></a>
+            
+            <svg aria-label="Commenter" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24"
+                role="img" viewBox="0 0 24 24" width="24">
+                <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor"
+                    stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+            <svg aria-label="Partager la publication" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)"
+                height="24" role="img" viewBox="0 0 24 24" width="24">
+                <title>Partager la publication</title>
+                <line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218"
+                    y1="3" y2="10.083"></line>
+                <polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
+                    stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon>
+            </svg>
+
+        </div>
+
+        <div class="likes-counter">
+            {% if post.likes == 0 %}
+            No likes
+            {% elif post.likes == 1 %}
+            1 like
+            {% else %}
+            {{post.likes}} likes
+            {% endif %}
+        </div>
+
+        <div class="caption">
+            {% if post.caption %}
+            <span class="description">
+                <a class="username" href="/user/{{post.user}}">{{post.user}}</a>
+                {{post.caption}}
+            </span>
+        </div>
+        {% endif %}
+        <form action="/comment/?post_id={{post.id}}" method="post">
+            {% csrf_token %}
+            <div class="comment">
+                <input type="text" placeholder="Add a comment..." name="comment" />
+                <a class="publish-btn highlight-link">
+                    <button type="submit"
+                        style="border-style: none;display: inherit;background: none;color: unset;font-weight: 700;">Publish</button></a>
+            </div>
+        </form>
+        {% for comment in comments %}
+        <div class="caption comment">
+            
+            <span class="description">
+                <a class="username" href="/user/{{comment.username}}">{{comment.username}}</a>
+                {{comment.comment}}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock user_container %}

@@ -92,7 +92,7 @@
             {% else %}
             <div class="profile__section__tab__tabcontent__container__image">
               {% for post in posts reversed %}
-              <a href="{{post.post_img.url}}"><img src="{{post.post_img.url}}" class="img-fluid"></a>
+              <a href="/post/{{post.id}}" ><img src="{{post.post_img.url}}" class="img-fluid"></a>
               {% endfor %}
             </div>
           </div>

@@ -33,15 +33,19 @@
           <div class="clear"></div>
           <input
             type="text"
-            name="location"
-            value={{user_profile.location}}
+            value="{{user_profile.location}}"
             placeholder="Your Location"
+            name="location"
           />
         </div>
         <div class="cpass">
           <label for="Cpass">Bio</label>
           <div class="clear"></div>
-          <textarea name="bio" id="Cpass">{{user_profile.bio}}</textarea>
+          <textarea name="bio" id="Cpass" 
+          placeholder="Write about yourself"
+          style="width: 85%;height: 91px;padding-left: 30px;text-align: inherit;">
+          {{user_profile.bio}}
+        </textarea>
         </div>
         <div class="submit">
           <input type="submit" value="Save changes" />
