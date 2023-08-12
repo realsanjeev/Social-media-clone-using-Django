@@ -1,0 +1,144 @@
+/*======================
+    404 page
+=======================*/
+
+.page_404 {
+    padding: 40px 0;
+    background: #fff;
+    font-family: "Arvo", serif;
+  }
+  
+  .page_404 img {
+    width: 100%;
+  }
+  
+  .four_zero_four_bg {
+    background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+  }
+  
+  .four_zero_four_bg h1 {
+    font-size: 80px;
+  }
+  
+  .four_zero_four_bg h3 {
+    font-size: 80px;
+  }
+  
+  .link_404 {
+    color: #fff !important;
+    padding: 10px 20px;
+    background: #39ac31;
+    margin: 20px 0;
+    display: inline-block;
+  }
+  .contant_box_404 {
+    margin-top: -50px;
+  }
+
+  /* 403 error page */
+  body {
+    font-family: fantasy;
+  }
+  
+  .four-zero-three {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+  }
+  .four-zero-three__inner {
+    padding: 20px;
+  }
+  .four-zero-three__title {
+    color: #000;
+    font-size: 5rem;
+  }
+  @media (max-width: 600px) {
+    .four-zero-three__title {
+      font-size: 4rem;
+    }
+  }
+  .four-zero-three__desc {
+    color: #e41919;
+    font-size: 2.5rem;
+  }
+  @media (max-width: 600px) {
+    .four-zero-three__desc {
+      font-size: 2rem;
+    }
+  }
+  .four-zero-three__content {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) {
+    .four-zero-three__content {
+      font-size: 1rem;
+    }
+  }
+  
+  /* 500 error page */
+  html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(#111, #333, #111);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #eee;
+  position: relative;
+  font-family: "Roboto", sans-serif;
+}
+
+.message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.message h1, .message h2, .message h3 {
+  margin: 0;
+  line-height: 0.8;
+}
+.message h2, .message h3 {
+  font-weight: 300;
+  color: #C8FFF4;
+}
+.message h1 {
+  font-weight: 700;
+  color: #03DAC6;
+  font-size: 8em;
+}
+.message h2 {
+  margin: 30px 0;
+}
+.message h3 {
+  font-size: 2.5em;
+}
+.message h4 {
+  display: inline-block;
+  margin: 0 15px;
+}
+.message button {
+  background: transparent;
+  border: 2px solid #C8FFF4;
+  color: #C8FFF4;
+  padding: 5px 15px;
+  font-size: 1.25em;
+  transition: all 0.15s ease;
+  border-radius: 3px;
+}
+.message button:hover {
+  background: #03DAC6;
+  border: 2px solid #03DAC6;
+  color: #111;
+  cursor: pointer;
+  transform: scale(1.05);
+}
