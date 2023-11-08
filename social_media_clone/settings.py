@@ -15,11 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-if 'CODESPACE_NAME' in os.environ:
-    codespace_name = os.getenv("CODESPACE_NAME")
-    codespace_domain = os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
-    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}']
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,22 +23,31 @@ if 'CODESPACE_NAME' in os.environ:
 SECRET_KEY = 'django-insecure-p2g130%y=wwy789hr+8tk1arzvks8%$*7!*kb++=y=4(9$tqy^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
 
+ALLOWED_HOSTS = ['localhost']
+if 'CODESPACE_NAME' in os.environ:
+    codespace_name = os.getenv("CODESPACE_NAME")
+    codespace_domain = os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")
+    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.{codespace_domain}',
+                            'http://localhost:8000', 'https://localhost:8000']
+    ALLOWED_HOSTS += [f'https://{codespace_name}-8000.{codespace_domain}']
 
 # Application definition
 
 INSTALLED_APPS = [
-    'userprofile',
-    'posts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # apps
+    
+    'userprofile',
+    'posts',
 ]
 
 MIDDLEWARE = [

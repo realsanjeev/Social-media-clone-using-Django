@@ -16,12 +16,21 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_profile_picture(self):
+        return self.profile_pics.url if self.profile_pics else None
+
 
 class FollowerCount(models.Model):
     follower = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.follower} -> {self.user}"
+
 class Contact(models.Model):
     name = models.TextField()
     email = models.EmailField()
     message = models.TextField()
+
+    def __str__(self):
+        return self.name

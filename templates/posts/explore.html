@@ -1,6 +1,5 @@
 {% extends "posts/base.html" %}
-
-{% block link %} {% load static %}
+{% block link %}
 <link rel="stylesheet" href="{% static 'styles/posts//styles.css' %}" />
 {% endblock link %} 
 
@@ -14,7 +13,7 @@
           @{{post.user}}
         </a>
         <div class="date-separator">•</div>
-        <div class="date">{{post.created_at}}</div>
+        <div class="date">{{ post.created_at|timesince }}</div>
         <a href="/follow" target="_blank" class="follow-btn highlight-link">Follow</a>
       </div>
       <img src="{{post.post_img.url}}" alt="{{post.caption}} image" class="user-post"/>      
