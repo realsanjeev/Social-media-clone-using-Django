@@ -16,7 +16,7 @@
         <div class="date">{{ post.created_at|timesince }}</div>
         <a href="/follow" target="_blank" class="follow-btn highlight-link">Follow</a>
       </div>
-      <img src="{{post.post_img.url}}" alt="{{post.caption}} image" class="user-post"/>      
+      <img src="{{ post.post_img.url }}" alt="{{ post.caption }} image" class="user-post"/>      
       <div class="post-actions">
         <a href="like-post/?post_id={{post.id}}">
         <svg aria-label="J’aime" class="like" color="rgb(38, 38, 38)" fill="rgb(38, 38, 38)" height="24" role="img" viewBox="0 0 24 24" width="24">

@@ -5,13 +5,13 @@
     <div class="container" style="margin: 40px;">
 
       <div class="profile__profile__logo">
-        <img src="{{user_profile.profile_pics.url}}" alt="Profile Image">
+        <img src="{{ user_profile.profile_pics.url }}" alt="Profile Image">
       </div>
       <div class="profile__profile__details">
 
         <div class="profile__profile__details__userName">
-          <h4><strong>@{{user.username}}</strong></h4>
-          <a href="/settings"><button style="    border-style: double;">
+          <h4><strong>@{{ user.username }}</strong></h4>
+          <a href="/settings"><button style="border-style: double;">
             Edit Profile
           </button></a>
           <a href="/settings"><button>

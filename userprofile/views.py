@@ -11,15 +11,17 @@ from userprofile.forms import MyLoginForm, SignUpForm
 # Create your views here.
 @login_required(login_url="login", redirect_field_name='login')
 def index(request):
-    context = dict()
-    template_files = os.path.join("posts", "home.html")
+    context = {}
+    template_file = os.path.join("posts", "home.html")
     user_profile = Profile.objects.get(user=request.user)
     post_objs = Post.objects.all()
     for post in post_objs:
         print(post.user)
-    context["user_profile"] = user_profile
-    context["posts"] = post_objs
-    return render(request, template_files, context)
+    context = {
+        "user_profile": user_profile,
+        "posts": post_objs
+    }
+    return render(request, template_file, context)
 
 @login_required(login_url="login")
 def settings(request):
@@ -29,8 +31,7 @@ def settings(request):
         user_profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         # If the profile doesn't exist, create a new one for the user
-        redirect('/')
-        # user_profile = Profile.objects.create(user=request.user, id_user=request.user.id)
+        user_profile = Profile.objects.create(user=request.user, id_user=request.user.id)
 
     if request.method == "POST":
         profile_pic = request.FILES.get("profile_pic")
@@ -39,7 +40,7 @@ def settings(request):
         print('---------------', profile_pic)
         if location:
             user_profile.location = location
-        if profile_pic == None:
+        if profile_pic is None:
             profile_pic = user_profile.profile_pics
         user_profile.profile_pics = profile_pic
         user_profile.bio = bio
@@ -47,7 +48,9 @@ def settings(request):
 
         return redirect('/')
 
-    context = {"user_profile": user_profile}
+    context = {
+        "user_profile": user_profile
+        }
     return render(request, template_file, context)
 
 def login_view(request):
@@ -61,7 +64,9 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect('/home')
-            error_message = {"message": "Invalid credential"}
+            error_message = {
+                "message": "Invalid credential"
+                }
 
             return render(request, template_file, error_message)
     else:
@@ -79,7 +84,8 @@ def signup_view(request):
             form.save()
             user_obj = User.objects.get(username=username)
             print("-"*100, user_obj)
-            new_profile = Profile.objects.create(user=user_obj, id_user=user_obj.id)
+            new_profile = Profile.objects.create(user=user_obj,
+                                            id_user=user_obj.id)
             new_profile.save()
 
             return render(request, template_file)

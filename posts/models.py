@@ -20,7 +20,7 @@ class LikePost(models.Model):
     username = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
 
     def __str__(self) -> str:
-        return f"{self.username} {self.post}"
+        return f"{self.username}-> {self.post}"
 
 class CommentPost(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, to_field="id")
@@ -28,4 +28,4 @@ class CommentPost(models.Model):
     comment = models.TextField(null=True)
 
     def __str__(self) -> str:
-        return f"{self.username} {self.comment}"
+        return f"{self.username}-> {self.comment}"

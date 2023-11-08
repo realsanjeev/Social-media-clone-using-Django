@@ -1,10 +1,9 @@
 import os
 from pathlib import Path
-from itertools import chain
-from typing import Any
-from django.db.models.query import QuerySet
-from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from django.views.generic import TemplateView, ListView
+from django.shortcuts import (render, 
+                              redirect,
+                              HttpResponse,
+                              get_object_or_404)
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -59,14 +58,14 @@ def home(request):
 
 @login_required(login_url="login")
 def posts(request):
-    context = dict()
     template_files = os.path.join("posts", "home.html")
     user_profile = Profile.objects.get(user=request.user)
     post_objs = Post.objects.all()
 
-    print('----------------------',post_objs)
-    context["user_profile"] = user_profile
-    context["posts"] = post_objs
+    context = {
+        "user_profile": user_profile,
+        "posts": post_objs
+    }
     return render(request, template_files, context)
 
 @login_required(login_url='login')
@@ -96,6 +95,7 @@ def user_view(request, search_user: str):
     error_file = Path("user/notFound.html")
     context = {}
 
+    # check if search user is yourself
     if request.user.username == search_user:
         return redirect("/profile")
 
@@ -170,7 +170,8 @@ def like_post_view(request):
     username = request.user.username
     post_id = request.GET.get("post_id")
     post_obj = Post.objects.get(id=post_id)
-    is_liked_before = LikePost.objects.filter(username=username, post_id=post_id).exists()
+    is_liked_before = LikePost.objects.filter(username=username,
+                                              post_id=post_id).exists()
 
     if not is_liked_before:
         like_post = LikePost(username=request.user, post_id=post_id)
@@ -218,4 +219,4 @@ def post_view(request, post_id: str):
         context["message"] = "Post not found"
         print(err)
 
-    return render(request, template_name=template_file, context=context)
+    return render(request, template_file, context=context)

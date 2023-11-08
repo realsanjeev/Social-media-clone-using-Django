@@ -5,15 +5,15 @@
   <div class="container d-flex align-items-center" style="margin-left: 40px;">
 
     <div class="profile__profile__logo">
-      <img src="{{other_user_profile.profile_pics.url}}" alt="Profile Image">
+      <img src="{{ other_user_profile.profile_pics.url }}" alt="Profile Image">
     </div>
     <div class="profile__profile__details">
 
       <div class="profile__profile__details__userName" style="margin-top: 10px;">
-        <h4><strong>@{{search_user_main.username}}</strong></h4>
+        <h4><strong>@{{ search_user_main.username }}</strong></h4>
         <form action="/follow" method="post">
           {% csrf_token %}
-          <input type="hidden" hidden value="{{search_user_main.username}}" name="following" />
+          <input type="hidden" hidden value="{{ search_user_main.username }}" name="following" />
           <a href="/follow"><button style="border-color: black; border-style: groove;">
               {% if is_following %}
               Following
@@ -24,17 +24,17 @@
         </form>
       </div>
       <div class="profile__profile__details__follower my-3">
-        <span><b>{{posts|length}}</b> posts</span>
+        <span><b>{{ posts|length }}</b> posts</span>
         <button>
-          <b>{{num_follower}}</b> followers
+          <b>{{ num_follower }}</b> followers
         </button>
         <button>
-          <b>{{num_following}}</b> following
+          <b>{{ num_following }}</b> following
         </button>
       </div>
       <div class="profile__profile__details__displayName">
-        <h4>{{search_user_main.first_name}} {{search_user_main.last_name}}</h4>
-        <h5>{{other_other_user_profile.bio}}</h5>
+        <h4>{{ search_user_main.first_name }} {{ search_user_main.last_name }}</h4>
+        <h5>{{ other_other_user_profile.bio }}</h5>
       </div>
 
     </div>
@@ -113,7 +113,6 @@
     <div id="Tagged" class="profile__section__tab__tabcontent">
 
     </div>
-
   </div>
 </div>
 {% endblock user_container %}

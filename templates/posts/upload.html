@@ -1,32 +1,27 @@
-{% extends "posts/base.html" %}
+{% extends 'posts/base.html' %}
 
-{% block link %} {% load static %}
-<link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css">
-<link rel="stylesheet" href="{% static 'styles/posts/upload.css' %}" />
-{% endblock link %}
+{% block link %}
+  <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css" />
+  <link rel="stylesheet" href="{% static 'styles/posts/upload.css' %}" />
+{% endblock %}
 
 {% block user_container %}
-<div>
-<div class="upload-post">
-<form action="/upload" method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  <h3 style="color: red; text-align: center;">{{message}}</h3>
-  <label for="inputImage" id="inputLabel">Click Here to upload image</label>
-  <input type="file" id="inputImage" name="post_pics" accept="image/*" />
-  <div id="preview-image">
-    <div id="placeholder">
-
-      <div id="upload-area" title="select a image">
-
+  <div class="upload-post">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h3 style="color: red; text-align: center;">{{ message }}</h3>
+      <label for="inputImage" id="inputLabel">Click Here to upload image</label>
+      <input type="file" id="inputImage" name="post_pics" accept="image/*" />
+      <div id="preview-image">
+        <div id="placeholder">
+          <div id="upload-area" title="select a image"></div>
+        </div>
+        <label for="post-caption" id="caption">Caption</label>
+        <textarea id="post-caption" cols="30" rows="10" placeholder="caption for image..." name="caption"></textarea>
       </div>
-    </div>
-    <label for="post-caption" id="caption">Caption</label>
-    <textarea id="post-caption" cols="30" rows="10" placeholder="caption for image..." name="caption">
+      <button type="submit" class="btn-post">Upload Post</button>
+    </form>
+  </div>
 
-  </textarea>
-    <button type="submit" class="btn-post">Upload Post</button>
-</form>
-</div>
-</div>
-<script src="{% static 'scripts/upload.js' %}"></script>
-{% endblock user_container %}
+  <script src="{% static 'scripts/upload.js' %}"></script>
+{% endblock %}
