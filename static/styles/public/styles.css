@@ -190,3 +190,7 @@
 	color: rgb(35, 135, 222);
 	font-size: inherit;
   }
+
+  .active {
+	border-bottom: 2px solid #F8E71C;
+  }

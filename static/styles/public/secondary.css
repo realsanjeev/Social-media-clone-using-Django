@@ -1,0 +1,185 @@
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h1,
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+dl {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+dt {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+
+.wrapper-navbar {
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a73e8;
+}
+
+nav {
+    display: flex;
+    width: 90%;
+}
+
+ul li a {
+    margin-left: 1.5em;
+}
+
+a.logo-nav {
+    margin-right: auto;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff;
+    position: relative;
+    font-size: 1.25em;
+}
+
+a::after {
+    content: "";
+    top: 80%;
+    border-bottom: 2px solid #F8E71C;
+    transition: all 0.35s;
+    position: absolute;
+}
+
+a:hover::after {
+    transition: all 0.35s;
+}
+
+a::after {
+    right: 50%;
+    left: 50%;
+}
+
+a:hover::after {
+    right: 0;
+    left: 0;
+}
+
+@media (max-width: 1024px) {
+    .wrapper-navbar {
+        height: auto;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    a.logo-nav {
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        margin-right: 0px;
+    }
+
+    ul {
+        width: 100%;
+        margin-bottom: 1em;
+        justify-content: space-between;
+    }
+
+    ul li a {
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 768px) {
+    a.logo-nav {
+        margin: 1.5em;
+    }
+
+    ul {
+        flex-direction: column;
+    }
+
+    ul li {
+        margin: 0.3em;
+        text-align: center;
+    }
+
+    ul li a {
+        margin-left: 0px;
+    }
+}

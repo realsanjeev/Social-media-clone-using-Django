@@ -1,0 +1,39 @@
+{% url 'contacts' as contact_url %}
+{% url 'about' as about_url %}
+{% url 'features' as feature_url %}
+{% url 'faq' as faq_url %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Clone {% block title %}{% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "styles/public/styles.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "styles/public/secondary.css" %}">
+    <link rel="icon" href="{% static "images/web-icon.png" %}">
+</head>
+<body>
+    <div class="wrapper-navbar">
+      <nav>
+        <a href="/home" class="logo-nav"><h1>Sathi</h1> </a>
+        <ul>
+          <li>
+            <a href="/about" class="{% if request.path == about_url %}active{% endif %}">About</a>
+          </li>
+          <li>
+            <a href="/features" class="{% if request.path == feature_url %}active{% endif %}">Features</a>
+          </li>
+          <li>
+            <a href="/faq" class="{% if request.path == faq_url %}active{% endif %}">FAQ</a>
+          </li>
+          <li>
+            <a href="/contacts" class="{% if request.path == contact_url %}active{% endif %}">Contacts</a>
+          </li>
+        </ul>
+      </nav>
+      </div>
+    {% block auth_container %}
+    {% endblock auth_container %}
+</body>
+</html>
