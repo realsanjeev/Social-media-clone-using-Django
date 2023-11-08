@@ -35,7 +35,6 @@ if 'CODESPACE_NAME' in os.environ:
     ALLOWED_HOSTS += [f'https://{codespace_name}-8000.{codespace_domain}']
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -6,7 +6,7 @@ User = get_user_model()
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio = models.TextField(blank=True)
     profile_pics = models.ImageField(upload_to="profile_images", 
@@ -15,7 +15,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
-
+    
+    @property
     def get_profile_picture(self):
         return self.profile_pics.url if self.profile_pics else None
 

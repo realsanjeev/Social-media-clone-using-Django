@@ -31,17 +31,14 @@ from posts.models import Post, LikePost, CommentPost
 # Create your views here.
 @login_required(login_url="/login")
 def home(request):
-    context = {}
     template_file = Path("posts/home.html")
-
+    
     try:
         user_profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
-        user_obj = User.objects.get(username=request.user)
-        new_profile = Profile.objects.create(user=user_obj, id_user=user_obj.id)
-        user_profile = Profile.objects.get(user=request.user)
+        user_obj = get_object_or_404(User, username=request.user)
+        user_profile, created = Profile.objects.get_or_create(user=user_obj, id_user=user_obj.id)
 
-    following_lst = []
     following_obj = FollowerCount.objects.filter(follower=request.user.username)
 
     if not following_obj.exists():
@@ -51,10 +48,17 @@ def home(request):
         post_feed = Post.objects.filter(user__username__in=following_lst)
         if not post_feed.exists():
             post_feed = Post.objects.all()
+            
+    # list of user liked post
+    liked_post_list = LikePost.objects.filter(username=request.user).values_list('post', flat=True)
+    context = {
+        "user_profile": user_profile,
+        "posts": post_feed,
+        "likes": liked_post_list
+    }
+    
+    return render(request, str(template_file), context)
 
-    context["user_profile"] = user_profile
-    context["posts"] = post_feed
-    return render(request, template_file, context)
 
 @login_required(login_url="login")
 def posts(request):
@@ -202,10 +206,13 @@ def comment_view(request):
 @login_required(login_url='login')
 def post_view(request, post_id: str):
     template_file = os.path.join("posts", "post.html")
-    context = {}
-    context['user_profile'] = Profile.objects.get(user=request.user)
+    context = {
+        'user_profile': Profile.objects.get(user=request.user)
+    }
+    is_liked = False
     try:
         post_obj = get_object_or_404(Post, id=post_id)
+        is_liked = LikePost.objects.filter(username=request.user, post=post_obj.id).exists()
         comment_obj = CommentPost.objects.filter(post=post_obj).exists()
         if comment_obj is None:
             comment_obj= []
@@ -215,8 +222,8 @@ def post_view(request, post_id: str):
             for comment in comment_obj:
                 print(f"{comment.username} {comment.comment}")
         context["post"] = post_obj
-    except Exception as err:
+    except Post.DoesNotExist as err:
         context["message"] = "Post not found"
         print(err)
-
+    context["is_liked"] = is_liked
     return render(request, template_file, context=context)
