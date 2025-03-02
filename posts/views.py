@@ -50,7 +50,7 @@ def home(request):
             post_feed = Post.objects.all()
             
     # list of user liked post
-    liked_post_list = LikePost.objects.filter(username=request.user).values_list('post', flat=True)
+    liked_post_list = LikePost.objects.filter(user=request.user).values_list('post', flat=True)
     context = {
         "user_profile": user_profile,
         "posts": post_feed,
@@ -94,6 +94,7 @@ def upload_view(request):
 
     return render(request, template_files, context)
 
+@login_required(login_url='login')
 def user_view(request, search_user: str):
     template_file = Path("posts/user.html")
     error_file = Path("user/notFound.html")
@@ -115,7 +116,7 @@ def user_view(request, search_user: str):
             follower=search_user_main.username).count()
         context["num_follower"] = FollowerCount.objects.filter(
             user=search_user_main.username).count()
-        print('-------------',is_following)
+        
         context["is_following"] = is_following
         context["search_user_main"] = search_user_main
         context["other_user_profile"] = other_user_profile
@@ -130,6 +131,7 @@ def user_view(request, search_user: str):
         err_msg = {"message": f"Profile not found for {search_user}"}
         return render(request, error_file, err_msg)
 
+@login_required(login_url='login')
 def search_user_view(request):
     template_file = os.path.join("posts", "search.html")
     context = dict()
@@ -150,7 +152,7 @@ def explore_view(request):
     template_file = os.path.join('posts', 'explore.html')
     context = dict()
     context['user_profile'] = Profile.objects.filter(user=request.user).first()
-    context['posts'] = Post.objects.filter(user=request.user.username)
+    context['posts'] = Post.objects.filter(user=request.user)
     return render(request, template_file, context)
 
 
@@ -171,21 +173,20 @@ def notification_view(request):
 
 @login_required(login_url='login')
 def like_post_view(request):
-    username = request.user.username
     post_id = request.GET.get("post_id")
     post_obj = Post.objects.get(id=post_id)
-    is_liked_before = LikePost.objects.filter(username=username,
+    is_liked_before = LikePost.objects.filter(user=request.user,
                                               post_id=post_id).exists()
 
     if not is_liked_before:
-        like_post = LikePost(username=request.user, post_id=post_id)
+        like_post = LikePost(user=request.user, post_id=post_id)
         like_post.save()
         post_obj.likes += 1
         post_obj.save()
         return redirect('/')
     else:
         post_obj.likes -= 1
-        LikePost.objects.filter(username=username, post_id=post_id).delete()
+        LikePost.objects.filter(user=request.user, post_id=post_id).delete()
         post_obj.save()
 
     return redirect('/')
@@ -196,7 +197,7 @@ def comment_view(request):
     post_id = request.GET.get("post_id")
     if request.method=="POST":
         new_comment = request.POST.get('comment')
-        comment_obj = CommentPost(username=request.user,
+        comment_obj = CommentPost(user=request.user,
                                   post_id=post_id,
                                   comment=new_comment)
         comment_obj.save()
@@ -212,12 +213,9 @@ def post_view(request, post_id: str):
     is_liked = False
     try:
         post_obj = get_object_or_404(Post, id=post_id)
-        is_liked = LikePost.objects.filter(username=request.user, post=post_obj.id).exists()
-        comment_obj = CommentPost.objects.filter(post=post_obj).exists()
-        if comment_obj is None:
-            comment_obj= []
-        else:
-            comment_obj = CommentPost.objects.filter(post=post_obj)
+        is_liked = LikePost.objects.filter(user=request.user, post=post_obj.id).exists()
+        comment_obj = CommentPost.objects.filter(post=post_obj)
+        if comment_obj.exists():
             context["comments"] = comment_obj
             for comment in comment_obj:
                 print(f"{comment.username} {comment.comment}")

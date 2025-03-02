@@ -1,45 +1,97 @@
 {% extends 'public/base.html' %}
 
-{% block title %}
-: Contact
-{% endblock title %}
+{% block title %} - Contact Us{% endblock title %}
 
 {% block auth_container %}
+<div class="hero">
+  <div class="container">
+    <h1>Get In Touch</h1>
+    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+  </div>
+</div>
 
 <main>
-    <section>
-      <h1>Contact Us</h1>
-      <p>If you have any questions, feedback, or concerns, we would love to hear from you. Please reach out to our support team using the contact information below:</p>
-      <ul>
-        <li>Email: support@socialmediaclone.com</li>
-        <li>Phone: +1 123-456-7890</li>
-        <li>Address: 123 Main Street, City, Country</li>
-      </ul>
-      <p>You can also use the contact form below to send us a message:</p>
-      <h2 class="message">{{message}}</h2>
-      <script>
-        // Get the message element
-        const messageElement = document.getElementById("message");
-    
-        // Set a timeout to hide the message after 3 seconds
-        setTimeout(() => {
-          messageElement.style.display = "none";
-        }, 3000);
-      </script>
-      <form action="/contact" method="POST">
-        {% csrf_token %}
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-        
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
-    
-  </main>
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Contact Information</h3>
+        <p style="margin-bottom: 2rem; color: var(--color-gray-600);">Feel free to reach out to us through any of these
+          channels</p>
+
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-details">
+            <h4>Email</h4>
+            <p>support@sathi.com</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div class="contact-details">
+            <h4>Phone</h4>
+            <p>+1 (555) 123-4567</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-details">
+            <h4>Address</h4>
+            <p>123 Social Street, Tech City, TC 12345</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-details">
+            <h4>Business Hours</h4>
+            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-container">
+        <h3>Send Us a Message</h3>
+
+        {% if message %}
+        <div class="success-message" id="successMessage">
+          {{ message }}
+        </div>
+        <script>
+          setTimeout(() => {
+            const msg = document.getElementById('successMessage');
+            if (msg) {
+              msg.style.opacity = '0';
+              msg.style.transition = 'opacity 0.3s';
+              setTimeout(() => msg.style.display = 'none', 300);
+            }
+          }, 3000);
+        </script>
+        {% endif %}
+
+        <form action="/contacts" method="POST">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="name">Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Your full name">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required placeholder="How can we help you?"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
 {% endblock auth_container %}

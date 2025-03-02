@@ -1,108 +1,276 @@
 {% extends 'posts/base.html' %}
+{% load static %}
+
+{% block title %} - Profile{% endblock title %}
+
+{% block link %}
+<style>
+  .my-profile-container {
+    max-width: 975px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .my-profile-header {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .my-profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--color-gray-200);
+    flex-shrink: 0;
+  }
+
+  .my-profile-info {
+    flex: 1;
+  }
+
+  .my-profile-username {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .my-profile-username h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--color-gray-900);
+  }
+
+  .edit-profile-btn {
+    padding: 0.5rem 1.5rem;
+    background: var(--color-white);
+    color: var(--color-gray-900);
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .edit-profile-btn:hover {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+  }
+
+  .settings-icon-btn {
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border-radius: var(--radius-lg);
+  }
+
+  .settings-icon-btn:hover {
+    background: var(--color-gray-100);
+  }
+
+  .my-profile-stats {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .my-stat-item {
+    font-size: 1rem;
+  }
+
+  .my-stat-item b {
+    font-weight: 700;
+    color: var(--color-gray-900);
+  }
+
+  .my-profile-bio h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+  }
+
+  .my-profile-bio h6 {
+    margin: 0;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    font-weight: 400;
+  }
+
+  .my-profile-tabs {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .my-tab-buttons {
+    display: flex;
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .my-tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-gray-500);
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .my-tab-btn.active {
+    color: var(--color-gray-900);
+    border-bottom-color: var(--color-gray-900);
+  }
+
+  .my-tab-btn:hover {
+    background: var(--color-gray-50);
+  }
+
+  .my-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .my-grid-post {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .my-grid-post:hover {
+    transform: scale(1.02);
+  }
+
+  .my-grid-post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .my-empty-posts {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--color-gray-500);
+  }
+
+  @media (max-width: 768px) {
+    .my-profile-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .my-profile-avatar {
+      width: 100px;
+      height: 100px;
+    }
+
+    .my-profile-username {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .my-profile-stats {
+      justify-content: center;
+    }
+
+    .my-posts-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.25rem;
+    }
+  }
+</style>
+{% endblock link %}
 
 {% block user_container %}
-<div class="profile__profile">
-    <div class="container" style="margin: 40px;">
+<div class="my-profile-container">
+  <div class="my-profile-header">
+    <img src="{{ user_profile.profile_pics.url }}" alt="{{ user.username }}" class="my-profile-avatar">
 
-      <div class="profile__profile__logo">
-        <img src="{{ user_profile.profile_pics.url }}" alt="Profile Image">
-      </div>
-      <div class="profile__profile__details">
-
-        <div class="profile__profile__details__userName">
-          <h4><strong>@{{ user.username }}</strong></h4>
-          <a href="/settings"><button style="border-style: double;">
-            Edit Profile
-          </button></a>
-          <a href="/settings"><button>
-            <svg aria-label="Options" class="_ab6-" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-              <circle cx="12" cy="12" fill="none" r="8.635" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-              <path d="M14.232 3.656a1.269 1.269 0 01-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 01-.796.66m-.001 16.688a1.269 1.269 0 01.796.66l.505.996h1.862l.505-.996a1.269 1.269 0 01.796-.66M3.656 9.768a1.269 1.269 0 01-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 01.66.796m16.688-.001a1.269 1.269 0 01.66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 01-.66-.796M7.678 4.522a1.269 1.269 0 01-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 01-.096 1.03m11.8 11.799a1.269 1.269 0 011.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 01.096-1.03m-14.956.001a1.269 1.269 0 01.096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 011.03.096m11.799-11.8a1.269 1.269 0 01-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 01-1.03-.096" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
-            </svg>
-          </button></a>
-
-        </div>
-        <div class="profile__profile__details__follower my-3">
-          <span><b>{{posts|length}}</b> posts</span>
-          <button>
-            <b>{{num_follower}}</b> followers
-          </button>
-          <button>
-            <b>{{num_following}}</b> following
-          </button>
-        </div>
-        <div class="profile__profile__details__displayName">
-          <h4>{{user.username}} </h4>
-          <h6>{{user_profile.bio}}</h6>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-<div class="profile__section">
-    <div class="container">
-
-      <div class="profile__section__tab">
-        <button class="tablinks" onclick="openSection(event, 'Posts')" id="defaultOpen">
-          <svg aria-label="" class="_ab6-" color="#262626" fill="#262626" height="12" role="img" viewBox="0 0 24 24" width="12">
-            <rect fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="18" x="3" y="3"></rect>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="9.015" x2="9.015" y1="3" y2="21"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="14.985" x2="14.985" y1="3" y2="21"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="9.015" y2="9.015"></line>
-            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="21" x2="3" y1="14.985" y2="14.985"></line>
+    <div class="my-profile-info">
+      <div class="my-profile-username">
+        <h2>@{{ user.username }}</h2>
+        <a href="/settings" class="edit-profile-btn">Edit Profile</a>
+        <a href="/settings" class="settings-icon-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="8.5"></circle>
+            <path
+              d="M14.232 3.656a1.269 1.269 0 01-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 01-.796.66m-.001 16.688a1.269 1.269 0 01.796.66l.505.996h1.862l.505-.996a1.269 1.269 0 01.796-.66M3.656 9.768a1.269 1.269 0 01-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 01.66.796m16.688-.001a1.269 1.269 0 01.66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 01-.66-.796M7.678 4.522a1.269 1.269 0 01-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 01-.096 1.03m11.8 11.799a1.269 1.269 0 011.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 01.096-1.03m-14.956.001a1.269 1.269 0 01.096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 011.03.096m11.799-11.8a1.269 1.269 0 01-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 01-1.03-.096">
+            </path>
           </svg>
-          Posts</button>
-        <!-- <button class="tablinks" onclick="openSection(event, 'Videos')">
-          <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
-            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5zm5-11.8l-6.8-3.9c-.5-.3-1-.3-1.5 0-.4.3-.7.7-.7 1.3v7.8c0 .5.3 1 .8 1.3.2.1.5.2.8.2s.5-.1.8-.2l6.8-3.9c.5-.3.8-.8.8-1.3s-.5-1-1-1.3zm-7.5 5.2V8.1l6.8 3.9-6.8 3.9z"></path>
-          </svg>
-          Videos</button>
-        <button class="tablinks" onclick="openSection(event, 'Saved')">
-          <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
-            <polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon>
-          </svg>
-          Saved</button>
-        <button class="tablinks" onclick="openSection(event, 'Tagged')">
-          <svg aria-label="" class="_ab6-" color="#8e8e8e" fill="#8e8e8e" height="12" role="img" viewBox="0 0 24 24" width="12">
-            <path d="M10.201 3.797L12 1.997l1.799 1.8a1.59 1.59 0 001.124.465h5.259A1.818 1.818 0 0122 6.08v14.104a1.818 1.818 0 01-1.818 1.818H3.818A1.818 1.818 0 012 20.184V6.08a1.818 1.818 0 011.818-1.818h5.26a1.59 1.59 0 001.123-.465z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            <path d="M18.598 22.002V21.4a3.949 3.949 0 00-3.948-3.949H9.495A3.949 3.949 0 005.546 21.4v.603" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-            <circle cx="12.072" cy="11.075" fill="none" r="3.556" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-          </svg>
-          Tagged</button> -->
+        </a>
       </div>
 
-      <div id="Posts" class="profile__section__tab__tabcontent">
-
-        <div class="profile__section__tab__tabcontent__container">
-          
-          <div class="profile__section__tab__tabcontent__container__image">
-            {% if posts|length == 0 %}
-          <h3>No posts</h3>
-          {% else %}
-            {% for post in posts %}
-            <a href="/post/{{post.id}}" style="padding: 10px;">
-              <img src="{{post.post_img.url}}" class="img-fluid" style="padding: 10px;"></a>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </div>
-
+      <div class="my-profile-stats">
+        <span class="my-stat-item"><b>{{ posts|length }}</b> posts</span>
+        <span class="my-stat-item"><b>{{ num_follower }}</b> followers</span>
+        <span class="my-stat-item"><b>{{ num_following }}</b> following</span>
       </div>
 
-      <div id="Videos" class="profile__section__tab__tabcontent">
-
+      <div class="my-profile-bio">
+        <h4>{{ user.username }}</h4>
+        {% if user_profile.bio %}
+        <h6>{{ user_profile.bio }}</h6>
+        {% endif %}
       </div>
-
-      <div id="Saved" class="profile__section__tab__tabcontent">
-
-      </div>
-
-      <div id="Tagged" class="profile__section__tab__tabcontent">
-
-      </div>
-
     </div>
   </div>
+
+  <div class="my-profile-tabs">
+    <div class="my-tab-buttons">
+      <button class="my-tab-btn active">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"></rect>
+          <line x1="9" y1="3" x2="9" y2="21" stroke="currentColor" stroke-width="2"></line>
+          <line x1="15" y1="3" x2="15" y2="21" stroke="currentColor" stroke-width="2"></line>
+          <line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="2"></line>
+          <line x1="3" y1="15" x2="21" y2="15" stroke="currentColor" stroke-width="2"></line>
+        </svg>
+        Posts
+      </button>
+    </div>
+
+    <div class="my-posts-grid">
+      {% if posts %}
+      {% for post in posts %}
+      <a href="/post/{{ post.id }}" class="my-grid-post">
+        <img src="{{ post.post_img.url }}" alt="{{ post.caption }}">
+      </a>
+      {% endfor %}
+      {% else %}
+      <div class="my-empty-posts" style="grid-column: 1 / -1;">
+        <h3>No Posts Yet</h3>
+        <p>Share your first photo to get started!</p>
+        <a href="/upload"
+          style="color: var(--color-primary); font-weight: 600; margin-top: 1rem; display: inline-block;">Upload Now</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 {% endblock user_container %}

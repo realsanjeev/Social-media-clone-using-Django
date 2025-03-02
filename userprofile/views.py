@@ -37,7 +37,7 @@ def settings(request):
         profile_pic = request.FILES.get("profile_pic")
         bio = request.POST.get("bio")
         location = request.POST.get("location")
-        print('---------------', profile_pic)
+
         if location:
             user_profile.location = location
         if profile_pic is None:
@@ -57,9 +57,7 @@ def login_view(request):
     template_file = os.path.join("user", "signin.html")
     if request.method == "POST":
         form = MyLoginForm(request, data=request.POST)
-        print("************************************")
         if form.is_valid():
-            print("````````````````````************************************````````````````````")
             user = form.get_user()
             if user is not None:
                 login(request, user)
@@ -83,12 +81,11 @@ def signup_view(request):
             
             form.save()
             user_obj = User.objects.get(username=username)
-            print("-"*100, user_obj)
             new_profile = Profile.objects.create(user=user_obj,
                                             id_user=user_obj.id)
             new_profile.save()
 
-            return render(request, template_file)
+            return redirect('/login')
     else:
         form = SignUpForm()
     context = {"form": form}
@@ -104,9 +101,9 @@ def profile(request):
     template_file = os.path.join('user', "main_profile.html")
     context = dict()
     user_profile = Profile.objects.filter(user=request.user).first()
-    post_objs = Post.objects.filter(user=request.user.username)
-    context["num_following"] = FollowerCount.objects.filter(follower=request.user.username).count()
-    context["num_follower"] = FollowerCount.objects.filter(user=request.user.username).count()
+    post_objs = Post.objects.filter(user=request.user)
+    context["num_following"] = FollowerCount.objects.filter(follower=request.user).count()
+    context["num_follower"] = FollowerCount.objects.filter(user=request.user).count()
     context["user_profile"] = user_profile
     context["posts"] = post_objs
     return render(request, template_file, context)
@@ -117,7 +114,6 @@ def follow_user(request):
         new_follower = request.user.username
         new_following = request.POST.get("following")
         
-        print('----------------------', new_following)
         is_previous_following = FollowerCount.objects.filter(
             follower=new_follower, 
             user=new_following
@@ -127,7 +123,7 @@ def follow_user(request):
             follow_obj.save()
         else:
             FollowerCount.objects.filter(follower=new_follower, user=new_following).delete()
-        return redirect(f'user/{new_following}')
+        return redirect(f'/user/{new_following}')
     return redirect('/')
 
 def about_view(request):

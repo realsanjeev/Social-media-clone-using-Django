@@ -1,20 +1,107 @@
 {% extends 'posts/base.html' %}
+{% load static %}
+
+{% block title %} - Search{% endblock title %}
+
+{% block link %}
+<style>
+  .search-results {
+    max-width: 630px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .search-header {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-gray-900);
+  }
+
+  .search-header p {
+    margin: 0;
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+  }
+
+  .user-card {
+    background: var(--color-white);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-200);
+    transition: all var(--transition-base);
+  }
+
+  .user-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
+  }
+
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    flex: 1;
+  }
+
+  .user-info a {
+    text-decoration: none;
+    color: var(--color-gray-900);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .user-info a:hover {
+    color: var(--color-primary);
+  }
+
+  .user-info p {
+    margin: 0.25rem 0 0 0;
+    color: var(--color-gray-600);
+    font-size: 0.875rem;
+  }
+</style>
+{% endblock link %}
 
 {% block user_container %}
-  <div class="container" style="margin: 10px;">
-    <h2 class="search">Search for '{{ query }}'</h2>
-    {% for user_obj in object_list %}
-      <a href="/user/{{ user_obj.user.username }}" style="text-decoration: none; color: black; padding: 5px;margin: 3px;">
-        <div class="user-container" style="display: flex; justify-content: center; align-items: center;justify-content: flex-start;">
-          <img src="{{ user_obj.profile_pics.url }}" alt="{{ user_obj.user }} avatar" height="30px" width="30px" style="padding: 5px;" />
-          <div class="user-info">
-            <h3>@{{ user_obj.user.username }}</h3>
-            <h4>{{ user_obj.user.first_name }} {{ user_obj.user.last_name }}</h4>
-          </div>
-        </div>
-      </a>
-      {% empty %}
-      <h3 style="color: red;">No result found</h3>
-    {% endfor %}
+<div class="search-results">
+  <div class="search-header">
+    <h2>Search Results</h2>
+    {% if query %}
+    <p>Showing results for "{{ query }}"</p>
+    {% endif %}
   </div>
-{% endblock %}
+
+  {% for profile in object_list %}
+  <div class="user-card">
+    <div class="user-avatar"></div>
+    <div class="user-info">
+      <a href="/user/{{ profile.user.username }}">@{{ profile.user.username }}</a>
+      <p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+    </div>
+  </div>
+  {% empty %}
+  <div class="empty-state">
+    <h3>No users found</h3>
+    <p>Try searching with a different keyword</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock user_container %}

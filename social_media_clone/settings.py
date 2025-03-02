@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p2g130%y=wwy789hr+8tk1arzvks8%$*7!*kb++=y=4(9$tqy^
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 if 'CODESPACE_NAME' in os.environ:
     codespace_name = os.getenv("CODESPACE_NAME")
     codespace_domain = os.getenv("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")

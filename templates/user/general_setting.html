@@ -1,57 +1,182 @@
-{% extends 'posts/base.html' %} 
-{% block link %} {% load static %}
-<link rel="stylesheet" href="{% static 'styles/userprofile//settings.css' %}" />
-{% endblock link %} 
-{% block user_container %}
+{% extends 'posts/base.html' %}
+{% load static %}
 
-<div class="profile__section">
-  <div class="head">
-    <div class="container">
-      <div class="title">
-        <h1>General Account Setting</h1>
-        <h3>@{{user.username}}</h3>
-      </div>
-    </div>
+{% block title %} - Settings{% endblock title %}
+
+{% block link %}
+<style>
+  .settings-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .settings-header {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .settings-header h1 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-gray-900);
+    font-size: 2rem;
+  }
+
+  .settings-header h3 {
+    margin: 0;
+    color: var(--color-gray-600);
+    font-weight: 500;
+  }
+
+  .settings-form {
+    background: var(--color-white);
+    padding: 2rem;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .profile-image-upload {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .current-profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--color-gray-200);
+  }
+
+  .file-input-wrapper {
+    flex: 1;
+  }
+
+  .file-input-wrapper input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px dashed var(--color-gray-300);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .file-input-wrapper input[type="file"]:hover {
+    border-color: var(--color-primary);
+    background: rgba(26, 115, 232, 0.05);
+  }
+
+  .form-group input[type="text"],
+  .form-group textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--color-gray-900);
+    transition: all var(--transition-base);
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (max-width: 768px) {
+    .profile-image-upload {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .settings-form {
+      padding: 1.5rem;
+    }
+  }
+</style>
+{% endblock link %}
+
+{% block user_container %}
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>Account Settings</h1>
+    <h3>@{{ user.username }}</h3>
   </div>
 
-  <div class="content">
-    <div class="container">
-      <form method="post" action="/settings" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="first">
-          <label for="first">Profile Picture</label>
-          <div class="clear"></div>
-          <img src="{{user_profile.profile_pics.url}}" alt="profile picture" class="profile-image"/>
-          <input type="file"
-           name="profile_pic" 
-           id="first" 
-           accept="image/*"
-            />
+  <div class="settings-form">
+    <form method="post" action="/settings" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label for="profile_pic">Profile Picture</label>
+        <div class="profile-image-upload">
+          <img src="{{ user_profile.profile_pics.url }}" alt="Current profile picture" class="current-profile-image" />
+          <div class="file-input-wrapper">
+            <input type="file" name="profile_pic" id="profile_pic" accept="image/*" />
+          </div>
         </div>
-        <div class="pass">
-          <label for="pass">Location</label>
-          <div class="clear"></div>
-          <input
-            type="text"
-            value="{{user_profile.location}}"
-            placeholder="Your Location"
-            name="location"
-          />
-        </div>
-        <div class="cpass">
-          <label for="Cpass">Bio</label>
-          <div class="clear"></div>
-          <textarea name="bio" id="Cpass" 
-          placeholder="Write about yourself"
-          style="width: 85%;height: 91px;padding-left: 30px;text-align: inherit;">
-          {{user_profile.bio}}
-        </textarea>
-        </div>
-        <div class="submit">
-          <input type="submit" value="Save changes" />
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" value="{{ user_profile.location }}"
+          placeholder="Where are you from?" />
+      </div>
+
+      <div class="form-group">
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio" placeholder="Tell us about yourself...">{{ user_profile.bio }}</textarea>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" value="Save Changes" class="submit-btn" />
+      </div>
+    </form>
   </div>
 </div>
 {% endblock user_container %}

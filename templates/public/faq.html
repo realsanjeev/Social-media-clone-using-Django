@@ -1,32 +1,146 @@
 {% extends 'public/base.html' %}
 
-{% block title %}
-: Frequently Asked Questions
-{% endblock title %}
+{% block title %} - FAQ{% endblock title %}
 
 {% block auth_container %}
-<main>
-    <section>
-      <h1>Frequently Asked Questions</h1>
-      <dl>
-        <dt>1. How do I create an account?</dt>
-        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Fusce at ante et elit faucibus convallis.</dd>
-        
-        <dt>2. How can I reset my password?</dt>
-        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Fusce at ante et elit faucibus convallis.</dd>
-        
-        <dt>3. Can I customize my profile?</dt>
-        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Fusce at ante et elit faucibus convallis.</dd>
-        
-        <dt>4. How do I add friends on Social Media Clone?</dt>
-        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Fusce at ante et elit faucibus convallis.</dd>
-        
-        <dt>5. How can I report inappropriate content?</dt>
-        <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Fusce at ante et elit faucibus convallis.</dd>
-        
-        <!-- Add more FAQs as needed -->
-      </dl>
-    </section>
-  </main>
+<div class="hero">
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+    <p>Find answers to common questions about Sathi</p>
+  </div>
+</div>
 
+<main>
+  <div class="container">
+    <div class="faq-container">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How do I create an account?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Creating an account on Sathi is easy! Click the "Sign Up" button in the navigation bar, fill in your details
+            including your name, email, username, and password. Once you submit the form, you'll be redirected to the
+            login page where you can sign in with your new credentials.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How can I reset my password?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            If you've forgotten your password, click on the "Forgot Password" link on the login page. Enter your email
+            address, and we'll send you instructions to reset your password. Follow the link in the email to create a
+            new password for your account.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can I customize my profile?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Yes! You can customize your profile by going to Settings. There you can update your profile picture, bio,
+            location, and other personal information. Make your profile unique and let others know more about you!
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How do I follow other users on Sathi?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            To follow someone, visit their profile page and click the "Follow" button. Once you follow someone, their
+            posts will appear in your home feed. You can unfollow them at any time by clicking the "Unfollow" button on
+            their profile.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How can I report inappropriate content?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            We take content moderation seriously. If you see inappropriate content, please contact our support team
+            through the contact page with details about the content. Our moderation team will review and take
+            appropriate action to maintain a safe environment for all users.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Is my data safe on Sathi?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Yes! We prioritize user privacy and data security. Your personal information is encrypted and stored
+            securely. We never share your data with third parties without your consent. You have full control over your
+            privacy settings and can choose who sees your content.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          Can I delete my account?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            Yes, you can delete your account at any time from your account settings. Please note that deleting your
+            account is permanent and cannot be undone. All your posts, photos, and data will be permanently removed from
+            our servers.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFAQ(this)">
+          How do I upload photos and videos?
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            To upload content, click the "Upload" button in the navigation bar. You can then select an image from your
+            device, add a caption, and post it to your feed. Your followers will be able to see, like, and comment on
+            your posts.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section style="text-align: center; margin-top: 4rem;">
+      <h2>Still Have Questions?</h2>
+      <p>Can't find what you're looking for? Contact our support team</p>
+      <a href="/contacts" class="hero-cta" style="margin-top: 1.5rem;">Contact Us</a>
+    </section>
+  </div>
+</main>
+
+<script>
+  function toggleFAQ(button) {
+    const answer = button.nextElementSibling;
+    const isActive = button.classList.contains('active');
+
+    // Close all other FAQs
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.classList.remove('active');
+      q.nextElementSibling.classList.remove('active');
+    });
+
+    // Toggle current FAQ
+    if (!isActive) {
+      button.classList.add('active');
+      answer.classList.add('active');
+    }
+  }
+</script>
 {% endblock auth_container %}

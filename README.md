@@ -48,11 +48,11 @@ For demo login, use **admin** as both the username and password.
 
 ### Ouput Preview
 #### SignIn
-![signin](https://github.com/realsanjeev/Social-media-clone-using-Django/assets/45820805/36823b86-4a99-408a-98c5-c85f740308e4)
+![signin](./media/demo/sign_in.png)
 #### Home
-![home](https://github.com/realsanjeev/Social-media-clone-using-Django/assets/45820805/8a9acb3d-c5aa-4898-8370-1cffcadfd3a4)
+![home](./media/demo/home.png)
 
 #### Profile
-![userprofile](https://github.com/realsanjeev/Social-media-clone-using-Django/assets/45820805/4f6b036b-8f1a-4990-945c-06cf042491af)
+![userprofile](./media/demo/user_profile.png)
 
 > To run with debug=False in localmachine use python manage.py runserver --insecure

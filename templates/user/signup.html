@@ -1,27 +1,32 @@
 {% extends "public/base.html" %}
-{% block title %}
-: Sign Up
-{% endblock title %}
+{% block title %} - Sign Up{% endblock title %}
 
 {% block auth_container %}
 <main class="main">
     <div class="container">
         <section class="wrapper">
             <div class="heading">
-                <h1 class="text text-large">Sign Up</h1>
-                <p class="text text-normal">Already have account? <span><a href="/login" class="text text-links">Sign In</a></span>
-                </p>
+                <h1>Create Account</h1>
+                <p>Already have an account? <a href="/login" class="text-links">Sign In</a></p>
             </div>
+
             <form name="signup" class="form" method="post" action="/signup">
                 {% csrf_token %}
                 {{form.as_p}}
+
                 <div class="input-control">
-                    <input type="submit" name="submit" class="input-submit" value="Sign Up" >
+                    <input type="submit" name="submit" class="input-submit" value="Create Account">
                 </div>
             </form>
-            
+
+            <div
+                style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-gray-200);">
+                <p style="font-size: 0.875rem; color: var(--color-gray-600);">
+                    By signing up, you agree to our <a href="#" class="text-links">Terms of Service</a> and <a href="#"
+                        class="text-links">Privacy Policy</a>
+                </p>
+            </div>
         </section>
     </div>
 </main>
-
 {% endblock auth_container %}

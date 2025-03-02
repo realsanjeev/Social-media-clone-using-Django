@@ -1,19 +1,78 @@
-<html>
-  <head>
-    <title>Sathi | 500 error page</title>
-    <link rel="stylesheet" type="text/css" href="https://site-assets.fontawesome.com/releases/v6.4.0/css/all.css" />
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/styles_error.css' %}" />
-    <link rel="icon" type="text/css" href="{% static 'styles/images/brand-icon.png' %}" />
-  </head>
+<!DOCTYPE html>
+<html lang="en">
 
-  <body>
-    <div class="message">
-      <h1>500</h1>
-      <h3>Server Error</h3>
-      <h2>It's not you, it's me.</h2>
-      <!-- use window.history.back(); to go back -->
-      <button>Go Back</button>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sathi - Server Error</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .error-container {
+      text-align: center;
+      color: white;
+      max-width: 600px;
+    }
+
+    .error-code {
+      font-size: 10rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 1rem;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .error-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .error-message {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      background: white;
+      color: #ff6b6b;
+      display: inline-block;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="error-container">
+    <div class="error-code">500</div>
+    <h1 class="error-title">Server Error</h1>
+    <p class="error-message">Oops! Something went wrong on our end. We're working to fix it.</p>
+    <a href="/home" class="btn">Go to Home</a>
+  </div>
+</body>
+
 </html>

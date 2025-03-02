@@ -1,30 +1,126 @@
 {% extends 'posts/base.html' %}
-{% block title %}
-  : Notifications
-{% endblock %}
+{% load static %}
+
+{% block title %} - Notifications{% endblock title %}
 
 {% block link %}
-  <link rel="stylesheet" href="{% static 'styles/posts//styles.css' %}" />
-{% endblock %}
+<style>
+  .notifications-container {
+    max-width: 630px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .notifications-header {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .notifications-header h2 {
+    margin: 0;
+    color: var(--color-gray-900);
+  }
+
+  .suggested-section {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .suggested-section h3 {
+    margin: 0 0 1rem 0;
+    color: var(--color-gray-900);
+    font-size: 1.125rem;
+  }
+
+  .suggested-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-gray-100);
+  }
+
+  .suggested-user:last-child {
+    border-bottom: none;
+  }
+
+  .suggested-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    flex-shrink: 0;
+  }
+
+  .suggested-info {
+    flex: 1;
+  }
+
+  .suggested-info a {
+    text-decoration: none;
+    color: var(--color-gray-900);
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .suggested-info a:hover {
+    color: var(--color-primary);
+  }
+
+  .suggested-info p {
+    margin: 0.25rem 0 0 0;
+    color: var(--color-gray-500);
+    font-size: 0.75rem;
+  }
+
+  .follow-btn {
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .follow-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+</style>
+{% endblock link %}
 
 {% block user_container %}
-  <div style="display: flex; justify-content: center;">
-    {% if not suggested_profiles %}
-      <h3>All up-to-date</h3>
-    {% else %}
-      <h1 style="padding: 5px;">Suggestions to follow</h1>
-      {% for suggestion in suggested_profiles %}
-        <div class="header">
-          <form action="/follow" method="post">
-            {% csrf_token %}
-            <div class="avatar"></div>
-            <a href="/user/{{ suggestion.user.username }}" class="username" style="display: contents;">@{{ suggestion.user.username }}</a>
-            <div class="date-separator"></div>
-            <input type="hidden" hidden value="{{ suggestion.user.username }}" name="following" />
-            <button type="submit">Follow</button>
-          </form>
-        </div>
-      {% endfor %}
-    {% endif %}
+<div class="notifications-container">
+  <div class="notifications-header">
+    <h2>Notifications</h2>
   </div>
-{% endblock %}
+
+  <div class="suggested-section">
+    <h3>Suggested for You</h3>
+    {% for profile in suggested_profiles %}
+    <div class="suggested-user">
+      <div class="suggested-avatar"></div>
+      <div class="suggested-info">
+        <a href="/user/{{ profile.user.username }}">@{{ profile.user.username }}</a>
+        <p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+      </div>
+      <form action="/follow" method="post" style="margin: 0;">
+        {% csrf_token %}
+        <input type="hidden" name="following" value="{{ profile.user.username }}">
+        <button type="submit" class="follow-btn">Follow</button>
+      </form>
+    </div>
+    {% empty %}
+    <p style="color: var(--color-gray-500); text-align: center; padding: 2rem 0;">No suggestions available</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock user_container %}

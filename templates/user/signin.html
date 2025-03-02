@@ -1,29 +1,39 @@
 {% extends "public/base.html" %}
-{% block title %}
-: Login
-{% endblock title %}
+{% block title %} - Sign In{% endblock title %}
 
 {% block auth_container %}
 <main class="main">
     <div class="container">
         <section class="wrapper">
             <div class="heading">
-                <h1 class="text text-large">Sign In</h1>
-                <p class="text text-normal">New user? <span><a href="/signup" class="text text-links">Create an account</a></span>
-                </p>
+                <h1>Welcome Back!</h1>
+                <p>New user? <a href="/signup" class="text-links">Create an account</a></p>
             </div>
-            <h6 style="color: red;">{{message}}</h6>
+
+            {% if message %}
+            <div class="error-message">
+                {{ message }}
+            </div>
+            {% endif %}
+
             <form name="signin" class="form" method="post" action="/login">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <div class="input-control">
-                    <a href="#" class="text text-links">Forgot Password</a>
-                    <input type="submit" name="submit" class="input-submit" value="Sign In" >
+
+                <div class="input-control" style="display: flex; justify-content: space-between; align-items: center;">
+                    <a href="#" class="text-links" style="font-size: 0.875rem;">Forgot Password?</a>
+                    <input type="submit" name="submit" class="input-submit" value="Sign In"
+                        style="width: auto; min-width: 120px;">
                 </div>
             </form>
-            
+
+            <div
+                style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--color-gray-200);">
+                <p style="font-size: 0.875rem; color: var(--color-gray-600);">
+                    Don't have an account? <a href="/signup" class="text-links">Sign up for free</a>
+                </p>
+            </div>
         </section>
     </div>
 </main>
-
 {% endblock auth_container %}

@@ -1,39 +1,80 @@
 {% extends 'public/base.html' %}
 
-{% block title %}
-: About
-{% endblock title %}
+{% block title %} - About Us{% endblock title %}
 
 {% block auth_container %}
+<div class="hero">
+  <div class="container">
+    <h1>About Sathi</h1>
+    <p>Connecting people, sharing moments, creating memories</p>
+    <a href="/signup" class="hero-cta">Join Us Today</a>
+  </div>
+</div>
+
 <main>
-<section>
-    <h1>About Social Media Clone</h1>
-    <p>Welcome to Social Media Clone, a platform that aims to bring people together and foster connections. Our mission is to provide a familiar and engaging social media experience that promotes meaningful interactions and allows users to stay connected with friends, family, and the world.</p>
-  </section>
-<section>
-    <h2>Our Story</h2>
-    <p>At Social Media Clone, we believe in the power of technology to connect people and facilitate communication. Inspired by the success of various social media platforms, we set out to create a platform that combines the best features while addressing some of the common challenges associated with social media.</p>
-    <p>Our journey started in [year], with a small team of passionate developers and designers. We spent countless hours researching, brainstorming, and iterating to create a platform that prioritizes user privacy, content moderation, and a positive user experience.</p>
-    <p>After several months of development and rigorous testing, we are proud to present Social Media Clone to you. We hope that you will find value in our platform and enjoy the experience of connecting with others in a safe and engaging environment.</p>
-  </section>
-  
-  <section>
-    <h2>Features</h2>
-    <ul>
-      <li>User profiles and customizable settings</li>
-      <li>News feed with posts from friends and followed accounts</li>
-      <li>Ability to share text, photos, videos, and links</li>
-      <li>Commenting and liking functionality</li>
-      <li>Direct messaging for private conversations</li>
-      <li>Groups and communities to join and interact with like-minded individuals</li>
-      <li>Privacy controls to manage your personal information and content visibility</li>
-      <li>Robust content moderation system to maintain a safe and inclusive environment</li>
-    </ul>
-  </section>
-  
-  <section>
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feedback, or concerns, we would love to hear from you. Please reach out to our support team at support@socialmediaclone.com or use the contact form on our website. We value your input and are committed to continuously improving our platform based on user feedback.</p>
-  </section>
+  <div class="container">
+    <section>
+      <h2>Our Mission</h2>
+      <p>Welcome to Sathi, a platform designed to bring people together and foster meaningful connections. Our mission
+        is to provide a familiar and engaging social media experience that promotes authentic interactions and allows
+        users to stay connected with friends, family, and communities around the world.</p>
+    </section>
+
+    <section>
+      <h2>Our Story</h2>
+      <p>At Sathi, we believe in the power of technology to connect people and facilitate communication. Inspired by the
+        success of various social media platforms, we set out to create a platform that combines the best features while
+        addressing common challenges associated with social media.</p>
+      <p>Our journey started with a vision to create a more authentic and user-friendly social platform. We spent
+        countless hours researching, brainstorming, and iterating to create a platform that prioritizes user privacy,
+        content moderation, and a positive user experience.</p>
+      <p>After months of development and rigorous testing, we are proud to present Sathi to you. We hope that you will
+        find value in our platform and enjoy the experience of connecting with others in a safe and engaging
+        environment.</p>
+    </section>
+
+    <section>
+      <h2>What We Offer</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">👤</div>
+          <h3>Personalized Profiles</h3>
+          <p>Create and customize your profile to showcase your personality and interests</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Stay Connected</h3>
+          <p>Keep up with friends and family through posts, photos, and updates</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Privacy First</h3>
+          <p>Control who sees your content with robust privacy settings</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Engage & Interact</h3>
+          <p>Like, comment, and share content with your network</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3>Global Community</h3>
+          <p>Connect with people from around the world</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>Modern Experience</h3>
+          <p>Enjoy a clean, intuitive interface designed for ease of use</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Get In Touch</h2>
+      <p>If you have any questions, feedback, or concerns, we would love to hear from you. Please reach out to our
+        support team through our <a href="/contacts" class="text-links">contact page</a>. We value your input and are
+        committed to continuously improving our platform based on user feedback.</p>
+    </section>
+  </div>
 </main>
 {% endblock auth_container %}

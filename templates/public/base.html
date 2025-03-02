@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Media Clone {% block title %}{% endblock title %}</title>
+    <meta name="description" content="Sathi - A modern social media platform to connect with friends and family">
+    <title>Sathi{% block title %}{% endblock title %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static "styles/public/styles.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "styles/public/secondary.css" %}">
@@ -15,25 +16,92 @@
 </head>
 <body>
     <div class="wrapper-navbar">
-      <nav>
-        <a href="/home" class="logo-nav"><h1>Sathi</h1> </a>
-        <ul>
-          <li>
-            <a href="/about" class="{% if request.path == about_url %}active{% endif %}">About</a>
-          </li>
-          <li>
-            <a href="/features" class="{% if request.path == feature_url %}active{% endif %}">Features</a>
-          </li>
-          <li>
-            <a href="/faq" class="{% if request.path == faq_url %}active{% endif %}">FAQ</a>
-          </li>
-          <li>
-            <a href="/contacts" class="{% if request.path == contact_url %}active{% endif %}">Contacts</a>
-          </li>
-        </ul>
-      </nav>
-      </div>
+        <nav>
+            <a href="/home" class="logo-nav"><h1>Sathi</h1></a>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul id="navMenu">
+                <li>
+                    <a href="/about" class="{% if request.path == about_url %}active{% endif %}">About</a>
+                </li>
+                <li>
+                    <a href="/features" class="{% if request.path == feature_url %}active{% endif %}">Features</a>
+                </li>
+                <li>
+                    <a href="/faq" class="{% if request.path == faq_url %}active{% endif %}">FAQ</a>
+                </li>
+                <li>
+                    <a href="/contacts" class="{% if request.path == contact_url %}active{% endif %}">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    
     {% block auth_container %}
     {% endblock auth_container %}
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sathi</h3>
+                <p>Connect with friends and family. Share moments, create memories, and stay in touch with the people who matter most.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/contacts">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Account</h3>
+                <ul>
+                    <li><a href="/login">Sign In</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/home">Home</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Sathi. All rights reserved. Built with ❤️ for connecting people.</p>
+        </div>
+    </footer>
+    
+    <script>
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navMenu = document.getElementById('navMenu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            
+            if (!navMenu.contains(event.target) && !toggle.contains(event.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>

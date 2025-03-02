@@ -1,55 +1,126 @@
-{% extends "posts/base.html" %}
+{% extends 'posts/base.html' %}
+{% load static %}
+
+{% block title %} - Explore{% endblock title %}
+
 {% block link %}
-<link rel="stylesheet" href="{% static 'styles/posts//styles.css' %}" />
-{% endblock link %} 
+<style>
+  .explore-container {
+    max-width: 975px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .explore-header {
+    background: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius-xl);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+  }
+
+  .explore-header h2 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-gray-900);
+  }
+
+  .explore-header p {
+    margin: 0;
+    color: var(--color-gray-600);
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .explore-post {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+  }
+
+  .explore-post:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .explore-post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .explore-post-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  .explore-post:hover .explore-post-overlay {
+    opacity: 1;
+  }
+
+  .overlay-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .explore-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.5rem;
+    }
+  }
+</style>
+{% endblock link %}
 
 {% block user_container %}
-<div class="wrapper">
-  {% for post in posts reversed %}
-    <div class="post">
-      <div class="header">
-        <div class="avatar"></div>
-        <a href="/user/{{post.user}}" target="_blank" class="username">
-          @{{post.user}}
-        </a>
-        <div class="date-separator">•</div>
-        <div class="date">{{ post.created_at|timesince }}</div>
-        <a href="/follow" target="_blank" class="follow-btn highlight-link">Follow</a>
+<div class="explore-container">
+  <div class="explore-header">
+    <h2>Explore</h2>
+    <p>Discover new posts and creators</p>
+  </div>
+
+  <div class="explore-grid">
+    {% for post in posts %}
+    <a href="/post/{{ post.id }}" class="explore-post">
+      <img src="{{ post.post_img.url }}" alt="{{ post.caption }}">
+      <div class="explore-post-overlay">
+        <div class="overlay-stat">
+          <svg fill="white" height="20" width="20" viewBox="0 0 24 24">
+            <path
+              d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z">
+            </path>
+          </svg>
+          {{ post.likes }}
+        </div>
       </div>
-      <img src="{{ post.post_img.url }}" alt="{{ post.caption }} image" class="user-post"/>      
-      <div class="post-actions">
-        <a href="like-post/?post_id={{post.id}}">
-        <svg aria-label="J’aime" class="like" color="rgb(38, 38, 38)" fill="rgb(38, 38, 38)" height="24" role="img" viewBox="0 0 24 24" width="24">
-          <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path></svg></a>
-        
-        <svg aria-label="Commenter" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
-        
-        <svg aria-label="Partager la publication" class="x1lliihq x1n2onr6" color="rgb(0, 0, 0)" fill="rgb(0, 0, 0)" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Partager la publication</title><line fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line><polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></polygon></svg>
-      
-      </div>
-      
-      <div class="likes-counter">
-        {% if post.likes == 0 %}
-        No likes
-        {% elif post.likes == 1 %}
-        1 like
-        {% else %}
-        {{post.likes}} likes
-        {% endif %}
-      </div>
-      
-      <div class="caption">
-        {% if post.caption %}
-        <span class="description"><a class="username" href="/user/{{post.user}}">{{post.user}}</a> {{post.caption}}</span>
-      </div>
-      {% endif %}
-      
-      <div class="comment">
-        <input type="text" placeholder="Add a comment..."/>
-        <a class="publish-btn highlight-link">Publish</a>
-      </div>
+    </a>
+    {% empty %}
+    <div class="empty-state" style="grid-column: 1 / -1;">
+      <h3>No posts to explore</h3>
+      <p>Check back later for new content!</p>
     </div>
     {% endfor %}
+  </div>
 </div>
-
 {% endblock user_container %}

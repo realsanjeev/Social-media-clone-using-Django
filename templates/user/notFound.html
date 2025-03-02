@@ -1,27 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 Not Found</title>
-</head>
-<body>
+    <title>Sathi - User Not Found</title>
     <style>
-        .container {
-            top: 50%;
-            padding: 40px;
-            background: blue;
-            color: aliceblue;
-            display: flex;
-            justify-content: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container h1 {
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .error-container {
             text-align: center;
+            color: white;
+            max-width: 600px;
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .error-message {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            background: white;
+            color: #667eea;
+            display: inline-block;
+            transition: all 0.3s;
+            margin: 0 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
     </style>
-    <div class="container">
-        <h1>404 Not Found</h1><br/>
-        <pre>{{message}}</pre>
+</head>
+
+<body>
+    <div class="error-container">
+        <div class="error-icon">👤</div>
+        <h1 class="error-title">User Not Found</h1>
+        <p class="error-message">
+            {{ message|default:"Sorry, this user doesn't exist or may have been removed." }}
+        </p>
+        <div>
+            <a href="/home" class="btn">Go to Home</a>
+            <a href="/search" class="btn">Search Users</a>
+        </div>
     </div>
 </body>
+
 </html>
